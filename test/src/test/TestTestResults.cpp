@@ -7,7 +7,7 @@ namespace UnitTestCpp
 namespace _Test
 {
 
-static TestDetails const TheTestDetails("testname"), _("fixturename"), _("suitename"), _("filename", 123);
+static TestDetails const TheTestDetails("testname", "fixturename", "suitename", "filename", 123);
 
 TEST_SUITE(unit_test_cpp)
 {

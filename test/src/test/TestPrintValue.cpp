@@ -50,11 +50,11 @@ TEST_FIXTURE(PrintValueTest, PrintToStringSimple)
 
 TEST_FIXTURE(PrintValueTest, PrintToStringString)
 {
-    EXPECT_EQ("\"ABCD\""), PrintToString("ABCD");
-    EXPECT_EQ("\"ABCD\""), PrintToString(string("ABCD"));
+    EXPECT_EQ("\"ABCD\"", PrintToString("ABCD"));
+    EXPECT_EQ("\"ABCD\"", PrintToString(string("ABCD")));
 #if defined(LINUX) || defined(DARWIN) || defined(WIN_MINGW)
-    EXPECT_EQ("L\"\\x4F60\\x597D\""), PrintToString(L"你好");
-    EXPECT_EQ("L\"\\x4F60\\x597D\""), PrintToString(wstring(L"你好"));
+    EXPECT_EQ("L\"\\x4F60\\x597D\"", PrintToString(L"你好"));
+    EXPECT_EQ("L\"\\x4F60\\x597D\"", PrintToString(wstring(L"你好")));
 #elif defined(WIN_MSVC)
     EXPECT_EQ("L\"\\xE4\\xBD\\xA0\\xE5\\xA5\\xBD\""), PrintToString(L"你好");
     EXPECT_EQ("L\"\\xE4\\xBD\\xA0\\xE5\\xA5\\xBD\""), PrintToString(wstring(L"你好"));
@@ -64,10 +64,10 @@ TEST_FIXTURE(PrintValueTest, PrintToStringString)
 TEST_FIXTURE(PrintValueTest, PrintToStringArray)
 {
     uint8_t chararray[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-    EXPECT_EQ(_("{ '\\0', '\\x1' (1), '\\x2' (2), '\\x3' (3), "
+    EXPECT_EQ("{ '\\0', '\\x1' (1), '\\x2' (2), '\\x3' (3), "
               "'\\x4' (4), '\\x5' (5), '\\x6' (6), '\\a' (7), "
               "'\\b' (8), '\\t' (9), '\\n' (10, 0xA), '\\v' (11, 0xB), "
-              "'\\f' (12, 0xC), '\\r' (13, 0xD), '\\xE' (14), '\\xF' (15) }"), PrintToString(chararray));
+              "'\\f' (12, 0xC), '\\r' (13, 0xD), '\\xE' (14), '\\xF' (15) }", PrintToString(chararray));
     uint32_t intarray[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     EXPECT_EQ("{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }", PrintToString(intarray));
 }

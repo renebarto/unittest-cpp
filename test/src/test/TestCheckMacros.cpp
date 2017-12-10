@@ -450,7 +450,7 @@ TEST(ExpectNotEqualFailureContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails const testDetails("testName"), _("fixtureName"), _("suiteName"), _("filename", -1);
+        UnitTestCpp::TestDetails const testDetails("testName", "fixtureName", "suiteName", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
 
         EXPECT_NE(1, 1);    line = __LINE__;
@@ -469,7 +469,7 @@ TEST(ExpectNotEqualFailureBecauseOfExceptionContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails const testDetails("testName"), _("fixtureName"), _("suiteName"), _("filename", -1);
+        UnitTestCpp::TestDetails const testDetails("testName", "fixtureName", "suiteName", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
 
         EXPECT_NE(ThrowingFunction(), 1);    line = __LINE__;
@@ -566,7 +566,7 @@ TEST(CheckCloseFailureContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails testDetails("test"), _("fixture"), _("suite"), _("filename", -1);
+        UnitTestCpp::TestDetails testDetails("test", "fixture", "suite", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
 
         EXPECT_NEAR(1.0f, 1.1f, 0.01f);    line = __LINE__;
@@ -585,7 +585,7 @@ TEST(CheckCloseFailureBecauseOfExceptionContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails testDetails("closeTest"), _("closeFixture"), _("closeSuite"), _("filename", -1);
+        UnitTestCpp::TestDetails testDetails("closeTest", "closeFixture", "closeSuite", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
         EXPECT_NEAR((float)ThrowingFunction(), 1.0001f, 0.1f);    line = __LINE__;
     }
@@ -681,7 +681,7 @@ TEST(ExpectNearFailureContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails testDetails("test"), _("fixture"), _("suite"), _("filename", -1);
+        UnitTestCpp::TestDetails testDetails("test", "fixture", "suite", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
 
         EXPECT_NEAR (1.0f, 1.1f, 0.01f);    line = __LINE__;
@@ -700,7 +700,7 @@ TEST(ExpectNearFailureBecauseOfExceptionContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails testDetails("closeTest"), _("closeFixture"), _("closeSuite"), _("filename", -1);
+        UnitTestCpp::TestDetails testDetails("closeTest", "closeFixture", "closeSuite", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
         EXPECT_NEAR ((float)ThrowingFunction(), 1.0001f, 0.1f);    line = __LINE__;
     }
@@ -815,7 +815,7 @@ TEST(CheckArrayCloseFailureContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails testDetails("arrayCloseTest"), _("arrayCloseFixture"), _("arrayCloseSuite"), _("filename", -1);
+        UnitTestCpp::TestDetails testDetails("arrayCloseTest", "arrayCloseFixture", "arrayCloseSuite", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
 
         int const data1[4] = { 0, 1, 2, 3 };
@@ -836,7 +836,7 @@ TEST(CheckArrayCloseFailureBecauseOfExceptionContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails testDetails("arrayCloseTest"), _("arrayCloseFixture"), _("arrayCloseSuite"), _("filename", -1);
+        UnitTestCpp::TestDetails testDetails("arrayCloseTest", "arrayCloseFixture", "arrayCloseSuite", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
 
         int const data[4] = { 0, 1, 2, 3 };
@@ -968,7 +968,7 @@ TEST(CheckArrayEqualFailureContainsCorrectInfo)
     }
 
     EXPECT_EQ("CheckArrayEqualFailureContainsCorrectInfo", reporter.lastFailedTest);
-    EXPECT_EQ(OSAL::ToString(__FILE__), reporter.lastFailedFile);
+    EXPECT_EQ(ToString(__FILE__), reporter.lastFailedFile);
     EXPECT_EQ(line, reporter.lastFailedLine);
 }
 
@@ -1110,7 +1110,7 @@ TEST(CheckArray2DCloseFailureContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails testDetails("array2DCloseTest"), _("array2DCloseFixture"), _("array2DCloseSuite"), _("filename", -1);
+        UnitTestCpp::TestDetails testDetails("array2DCloseTest", "array2DCloseFixture", "array2DCloseSuite", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
 
         int const data1[2][2] = { {0, 1}, {2, 3} };
@@ -1131,7 +1131,7 @@ TEST(CheckArray2DCloseFailureBecauseOfExceptionContainsCorrectDetails)
     RecordingReporter reporter;
     {
         UnitTestCpp::TestResults testResults(&reporter);
-        UnitTestCpp::TestDetails testDetails("array2DCloseTest"), _("array2DCloseFixture"), _("array2DCloseSuite"), _("filename", -1);
+        UnitTestCpp::TestDetails testDetails("array2DCloseTest", "array2DCloseFixture", "array2DCloseSuite", "filename", -1);
         ScopedCurrentTest scopedResults(testResults, &testDetails);
 
         const float data[2][2] = { {0, 1}, {2, 3} };

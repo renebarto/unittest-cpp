@@ -153,6 +153,13 @@ inline ConsoleBase<CharT> & ConsoleBase<CharT>::operator<<(_SetBackgroundColor c
 
 } // namespace UnitTestCpp
 
-UnitTestCpp::_SetForegroundColor fgcolor(UnitTestCpp::ConsoleColor color);
-UnitTestCpp::_SetBackgroundColor bgcolor(UnitTestCpp::ConsoleColor color);
+inline UnitTestCpp::_SetForegroundColor fgcolor(UnitTestCpp::ConsoleColor color)
+{
+    return{ color };
+}
+
+inline UnitTestCpp::_SetBackgroundColor bgcolor(UnitTestCpp::ConsoleColor color)
+{
+    return{ color };
+}
 

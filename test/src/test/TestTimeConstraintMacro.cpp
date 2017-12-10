@@ -32,7 +32,7 @@ TEST (TimeConstraintMacroUsesCorrectInfo)
     }
 
     EXPECT_EQ(1, reporter.testFailedCount);
-    EXPECT_TRUE(reporter.lastFailedFile.find(OSAL::ToString(__FILE__)) != string::npos);
+    EXPECT_TRUE(reporter.lastFailedFile.find(ToString(__FILE__)) != string::npos);
     EXPECT_EQ(testLine, reporter.lastFailedLine);
     EXPECT_TRUE(reporter.lastFailedTest.find("TimeConstraintMacroUsesCorrectInfo") != string::npos);
 }

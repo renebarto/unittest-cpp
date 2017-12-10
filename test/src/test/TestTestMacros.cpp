@@ -194,7 +194,7 @@ struct FixtureCtorAsserts : public TestFixture
 {
     FixtureCtorAsserts()
     {
-        UnitTestCpp::ReportAssert("assert failure"), _("file", FailingLine);
+        UnitTestCpp::ReportAssert("assert failure", "file", FailingLine);
     }
     void SetUp() {}
     void TearDown() {}
@@ -237,7 +237,7 @@ TEST_SUITE(SameTestSuite)
 TEST(CUR_TEST_NAME)
 {
     const UnitTestCpp::TestDetails* details = CurrentTest::Details();
-    ASSERT_EQ(OSAL::ToString(STRINGIFY(CUR_TEST_NAME)), details->testName);
+    ASSERT_EQ(ToString(STRINGIFY(CUR_TEST_NAME)), details->testName);
 }
 
 #undef CUR_TEST_NAME
