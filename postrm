@@ -1,0 +1,20 @@
+#!/bin/bash
+
+case $1 in
+  purge)
+    $0 remove
+    ;;
+
+  remove)
+    ldconfig
+    ;;
+
+  abort-install)
+    ;;
+
+  abort-upgrade)
+    ;;
+
+  failed-upgrade)
+    ;;
+esac

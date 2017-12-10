@@ -2,3 +2,6 @@ unittest-c++.pc
 /output/
 /.idea/
 /cmake-build-*/
+/build-package.sh
+/control
+/*.deb

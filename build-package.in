@@ -1,0 +1,22 @@
+#!/bin/bash
+
+install_dir=@CMAKE_INSTALL_PREFIX@
+source_dir=@CMAKE_CURRENT_SOURCE_DIR@
+
+mkdir -p $install_dir/../DEBIAN
+find $install_dir -type d | xargs chmod 755
+cp $source_dir/control $install_dir/../DEBIAN/
+cp $source_dir/postinst $install_dir/../DEBIAN/
+chmod 755 $install_dir/../DEBIAN/postinst
+cp $source_dir/postrm $install_dir/../DEBIAN/
+chmod 755 $install_dir/../DEBIAN/postrm
+cp $source_dir/preinst $install_dir/../DEBIAN/
+chmod 755 $install_dir/../DEBIAN/preinst
+cp $source_dir/prerm $install_dir/../DEBIAN/
+chmod 755 $install_dir/../DEBIAN/prerm
+cp $source_dir/copyright $install_dir/../
+chmod 644 $install_dir/../copyright
+cp $source_dir/changelog $install_dir/../
+chmod 644 $install_dir/../changelog
+
+fakeroot dpkg-deb --build $install_dir/.. $source_dir/unittest-c++-@PACKAGE_VERSION@-1.deb

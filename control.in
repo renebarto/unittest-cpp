@@ -1,0 +1,10 @@
+Package: @PACKAGE_NAME@
+Version: @PACKAGE_VERSION@-1
+Section: base
+Priority: optional
+Architecture: all
+Depends:
+Maintainer: Rene Barto <rene.barto66@gmail.com>
+Description: Unit test framework based on UnitTest++ and
+ Google Test which generates XUnit compliant xml files,
+ usable by a.ol Jenkins

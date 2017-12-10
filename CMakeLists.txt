@@ -119,6 +119,25 @@ endif()
 if (NOT LOCAL_BUILD)
     add_uninstall_target(${PACKAGE_NAME} uninstall-components)
     add_install_target(${PACKAGE_NAME} install-components)
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/control.in
+        ${CMAKE_CURRENT_SOURCE_DIR}/control
+        IMMEDIATE @ONLY)
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/build-package.in
+        ${CMAKE_CURRENT_SOURCE_DIR}/build-package.sh
+        IMMEDIATE @ONLY)
+
+    add_custom_target(dpkg
+        ${CMAKE_CURRENT_SOURCE_DIR}/setup-package.sh
+        DEPENDS
+        install-components
+        ${CMAKE_CURRENT_SOURCE_DIR}/control
+        ${CMAKE_CURRENT_SOURCE_DIR}/build-package.sh
+        ${CMAKE_CURRENT_SOURCE_DIR}/postinst
+        ${CMAKE_CURRENT_SOURCE_DIR}/postrm
+        ${CMAKE_CURRENT_SOURCE_DIR}/preinst
+        ${CMAKE_CURRENT_SOURCE_DIR}/prerm)
 
     install_pkgconfig_file(${CMAKE_CURRENT_SOURCE_DIR}/${PACKAGE_NAME}.pc)
 
