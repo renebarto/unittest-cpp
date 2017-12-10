@@ -21,7 +21,7 @@ int main(int argc, const char * argv[])
     std::string xmlOutput;
     if (argc > 2)
     {
-        if (strcasecmp(argv[1], "--xml"))
+        if (strcasecmp(argv[1], "--xml") == 0)
             xmlOutput = argv[2];
     }
 
