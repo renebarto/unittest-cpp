@@ -1,0 +1,4 @@
+unittest-c++.pc
+/output/
+/.idea/
+/cmake-build-*/
