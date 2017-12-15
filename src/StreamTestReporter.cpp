@@ -130,6 +130,19 @@ static std::string TestFixtureName(std::string name)
     return (!name.empty()) ? name : "DefaultFixture";
 }
 
+static std::string TestName(const std::string & suiteName,
+                            const std::string & fixtureName,
+                            const std::string & testName)
+{
+    basic_ostringstream<char> stream;
+    if (!suiteName.empty())
+        stream << suiteName << "::";
+    if (!fixtureName.empty())
+        stream << fixtureName << "::";
+    stream << testName;
+    return stream.str();
+}
+
 std::string StreamTestReporter::TestRunStartMessage(int numberOfTestSuites,
                                                     int numberOfTestFixtures,
                                                     int numberOfTests)
@@ -236,6 +249,13 @@ std::string StreamTestReporter::TestFixtureFinishMessage(const std::string & fix
     return stream.str();
 }
 
+std::string StreamTestReporter::TestStartMessage(const std::string & fixtureName, const std::string & testName)
+{
+    basic_ostringstream<char> stream;
+    stream << TestName("", fixtureName, testName);
+    return stream.str();
+}
+
 std::string StreamTestReporter::TestFinishMessage(const TestDetails & details,
                                                    bool UNUSED(success),
                                                    int milliSecondsElapsed)
@@ -243,19 +263,6 @@ std::string StreamTestReporter::TestFinishMessage(const TestDetails & details,
     basic_ostringstream<char> stream;
     stream << TestName(details.suiteName, details.fixtureName, details.testName)
            << " (" << milliSecondsElapsed << " ms)";
-    return stream.str();
-}
-
-std::string StreamTestReporter::TestName(const std::string & suiteName,
-                                          const std::string & fixtureName,
-                                          const std::string & testName)
-{
-	basic_ostringstream<char> stream;
-    if (!suiteName.empty())
-        stream << suiteName << "::";
-    if (!fixtureName.empty())
-        stream << fixtureName << "::";
-    stream << testName;
     return stream.str();
 }
 

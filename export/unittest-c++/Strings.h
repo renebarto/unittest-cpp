@@ -91,18 +91,3 @@ inline std::string ToNarrowString(const std::string & value)
 
 } // namespace UnitTestCpp
 
-//#if defined (UNICODE) || defined(_UNICODE)
-//#define _(a) L##a
-//#else
-//#define _(a) a
-//#endif
-
-//#if defined(WIN_MSVC)
-//#include "osal/windows/Strings.h"
-//#elif defined(WIN_MINGW)
-//#include "osal/mingw/Strings.h"
-//#elif defined(DARWIN)
-//#include "osal/darwin/Strings.h"
-//#elif defined(LINUX)
-//#include "osal/linux/Strings.h"
-//#endif

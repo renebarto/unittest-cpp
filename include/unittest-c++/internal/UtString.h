@@ -404,7 +404,7 @@ inline bool IsXDigit(wchar_t ch)
 // The template argument UnsignedChar is the unsigned version of Char,
 // which is the type of c.
 template <typename UnsignedChar, typename Char>
-static CharFormat PrintAsCharLiteralTo(Char c, std::basic_ostream<char> & os)
+static CharFormat PrintAsCharLiteralTo(Char c, std::ostream & os)
 {
     switch (static_cast<wchar_t>(c))
     {
@@ -455,7 +455,7 @@ static CharFormat PrintAsCharLiteralTo(Char c, std::basic_ostream<char> & os)
 
 // Prints a wchar_t c as if it's part of a std::string literal, escaping it when
 // necessary; returns how c was formatted.
-static CharFormat PrintAsStringLiteralTo(wchar_t c, std::basic_ostream<char> & os)
+static CharFormat PrintAsStringLiteralTo(wchar_t c, std::ostream & os)
 {
     switch (c)
     {
@@ -472,7 +472,7 @@ static CharFormat PrintAsStringLiteralTo(wchar_t c, std::basic_ostream<char> & o
 
 // Prints a char c as if it's part of a std::string literal, escaping it when
 // necessary; returns how c was formatted.
-static CharFormat PrintAsStringLiteralTo(char c, std::basic_ostream<char> & os)
+static CharFormat PrintAsStringLiteralTo(char c, std::ostream & os)
 {
     return PrintAsStringLiteralTo(static_cast<wchar_t>(static_cast<unsigned char>(c)), os);
 }
@@ -482,7 +482,7 @@ static CharFormat PrintAsStringLiteralTo(char c, std::basic_ostream<char> & os)
 // using the standard C++ escape sequence.  The template argument
 // UnsignedChar is the unsigned version of Char, which is the type of c.
 template <typename UnsignedChar, typename Char>
-void PrintCharAndCodeTo(Char c, std::basic_ostream<char> & os)
+void PrintCharAndCodeTo(Char c, std::ostream & os)
 {
     // First, print c as a literal in the most readable form we can find.
     os << ((sizeof(c) > 1) ? "L'" : "'");
@@ -515,7 +515,7 @@ void PrintCharAndCodeTo(Char c, std::basic_ostream<char> & os)
 // The array starts at begin, the length is len, it may include '\0' characters
 // and may not be NUL-terminated.
 template <typename CharType>
-static void PrintCharsAsStringTo(const CharType* begin, size_t len, std::basic_ostream<char> & os)
+static void PrintCharsAsStringTo(const CharType* begin, size_t len, std::ostream & os)
 {
     const char* const kQuoteBegin = sizeof(CharType) == 1 ? "\"" : "L\"";
     os << kQuoteBegin;

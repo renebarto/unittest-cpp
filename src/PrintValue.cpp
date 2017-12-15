@@ -12,38 +12,38 @@ string WideStringToUtf8(const wstring & value)
     return internal::WideStringToUtf8(&value[0], static_cast<int>(value.length()));
 }
 
-void PrintTo(unsigned char c, std::basic_ostream<char> & os)
+void PrintTo(unsigned char c, std::ostream & os)
 {
     internal::PrintCharAndCodeTo<unsigned char>(c, os);
 }
-void PrintTo(signed char c, std::basic_ostream<char> & os)
+void PrintTo(signed char c, std::ostream & os)
 {
     internal::PrintCharAndCodeTo<unsigned char>(c, os);
 }
 
 // Prints a wchar_t as a symbol if it is printable or as its internal
 // code otherwise and also as its code.  L'\0' is printed as "L'\\0'".
-void PrintTo(wchar_t wc, std::basic_ostream<char> & os)
+void PrintTo(wchar_t wc, std::ostream & os)
 {
     internal::PrintCharAndCodeTo<wchar_t>(wc, os);
 }
 
-void PrintTo(const char* s, std::basic_ostream<char> & stream)
+void PrintTo(const char* s, std::ostream & stream)
 {
     internal::PrintCharsAsStringTo(s, strlen(s), stream);
 }
 
-void PrintTo(const wchar_t * s, std::basic_ostream<char> & stream)
+void PrintTo(const wchar_t * s, std::ostream & stream)
 {
     internal::PrintCharsAsStringTo(s, wcslen(s), stream);
 }
 
-void PrintStringTo(const string& s, std::basic_ostream<char> & os)
+void PrintStringTo(const string& s, std::ostream & os)
 {
     internal::PrintCharsAsStringTo(s.data(), s.size(), os);
 }
 
-void PrintWideStringTo(const wstring& s, std::basic_ostream<char> & os)
+void PrintWideStringTo(const wstring& s, std::ostream & os)
 {
     internal::PrintCharsAsStringTo(s.data(), s.size(), os);
 }
@@ -51,7 +51,7 @@ void PrintWideStringTo(const wstring& s, std::basic_ostream<char> & os)
 // Prints a (const) char/wchar_t array of 'len' elements, starting at address
 // 'begin'.  CharType must be either char or wchar_t.
 template <typename CharType>
-static void UniversalPrintCharArray(const CharType * begin, size_t len, std::basic_ostream<char> & stream)
+static void UniversalPrintCharArray(const CharType * begin, size_t len, std::ostream & stream)
 {
     // The code
     //   const char kFoo[] = "foo";
@@ -75,14 +75,14 @@ static void UniversalPrintCharArray(const CharType * begin, size_t len, std::bas
 }
 
 // Prints a (const) char array of 'len' elements, starting at address 'begin'.
-void UniversalPrintArray(const char * begin, size_t len, std::basic_ostream<char> & stream)
+void UniversalPrintArray(const char * begin, size_t len, std::ostream & stream)
 {
     UniversalPrintCharArray(begin, len, stream);
 }
 
 // Prints a (const) wchar_t array of 'len' elements, starting at address
 // 'begin'.
-void UniversalPrintArray(const wchar_t * begin, size_t len, std::basic_ostream<char> & stream)
+void UniversalPrintArray(const wchar_t * begin, size_t len, std::ostream & stream)
 {
     UniversalPrintCharArray(begin, len, stream);
 }

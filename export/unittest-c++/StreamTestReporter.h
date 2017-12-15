@@ -17,7 +17,7 @@ public:
     static const std::string TestSuccessSeparator;
     static const std::string TestFailSeparator;
 
-    StreamTestReporter(std::basic_ostream<char> & stream)
+    StreamTestReporter(std::ostream & stream)
         : _stream(stream)
     { }
 
@@ -63,15 +63,13 @@ protected:
     std::string TestFixtureFinishMessage(const std::string & fixtureName,
                                           int numberOfTests,
                                           int milliSecondsElapsed);
+    std::string TestStartMessage(const std::string & fixtureName, const std::string & testName);
     std::string TestFinishMessage(const TestDetails & test, bool success,
                                    int milliSecondsElapsed);
     std::string TestRunSummaryMessage(const TestResults * results, int milliSecondsElapsed);
     std::string TestRunOverviewMessage(const TestResults * results);
-    std::string TestName(const std::string & suiteName,
-                          const std::string & fixtureName,
-                          const std::string & testName);
 
-    std::basic_ostream<char> & _stream;
+    std::ostream & _stream;
 };
 
 } // namespace UnitTestCpp

@@ -80,6 +80,11 @@ int TestResults::GetTotalTestCount() const
     return totalTestCount;
 }
 
+int TestResults::GetPassedTestCount() const
+{
+    return totalTestCount - failedTestCount;
+}
+
 int TestResults::GetFailedTestCount() const
 {
     return failedTestCount;

@@ -31,6 +31,7 @@ public:
     void OnTestFinish(const TestDetails & details, int milliSecondsElapsed);
 
     int GetTotalTestCount() const;
+    int GetPassedTestCount() const;
     int GetFailedTestCount() const;
     int GetFailureCount() const;
 

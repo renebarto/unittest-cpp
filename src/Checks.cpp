@@ -5,16 +5,6 @@ using namespace std;
 namespace UnitTestCpp
 {
 
-bool IsEqualIgnoreCase(const char * lhs, const char * rhs)
-{
-    return strcasecmp(lhs, rhs) == 0;
-}
-
-bool IsEqualIgnoreCase(const wchar_t * lhs, const wchar_t * rhs)
-{
-    return wcscasecmp(lhs, rhs) == 0;
-}
-
 namespace internal
 {
 

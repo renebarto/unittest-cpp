@@ -39,7 +39,7 @@ private:
     int milliSecondsElapsed;
 };
 
-inline std::basic_ostream<char> & operator << (std::basic_ostream<char> & stream, const TestDetailedResult & result)
+inline std::ostream & operator << (std::ostream & stream, const TestDetailedResult & result)
 {
     return stream << result.fileName << ":" << result.lineNumber << " : Test "
                   << result.suiteName << "::" << result.fixtureName << "::" << result.testName;

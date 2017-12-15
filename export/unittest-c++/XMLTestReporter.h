@@ -12,7 +12,7 @@ class TestResult;
 class UNIT_TEST_CPP_EXPORT XMLTestReporter : public DeferredTestReporter
 {
 public:
-    explicit XMLTestReporter(std::basic_ostream<char> & stream);
+    explicit XMLTestReporter(std::ostream & stream);
 
     virtual void ReportTestRunSummary(const TestResults * results, int milliSecondsElapsed) override;
 
@@ -28,7 +28,7 @@ private:
     void AddFailure(const TestDetailedResult & result);
     void EndTest(const TestDetailedResult & result);
 
-    std::basic_ostream<char> & _stream;
+    std::ostream & _stream;
 };
 
 } // namespace UnitTestCpp
