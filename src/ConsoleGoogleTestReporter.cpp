@@ -43,8 +43,6 @@ static std::string TestName(const std::string & suiteName,
                             const std::string & testName)
 {
     basic_ostringstream<char> stream;
-//    if (!suiteName.empty())
-//        stream << suiteName << ".";
     if (!fixtureName.empty())
         stream << fixtureName;
     else
