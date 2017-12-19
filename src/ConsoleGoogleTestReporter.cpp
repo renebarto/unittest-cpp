@@ -23,19 +23,9 @@ static std::string TestLiteral(int numberOfTests)
     return (numberOfTests == 1) ? "test" : "tests";
 }
 
-static std::string TestFailureLiteral(int numberOfTestFailures)
-{
-    return (numberOfTestFailures == 1) ? "failure" : "failures";
-}
-
 static std::string TestFixtureLiteral(int numberOfTestFixtures)
 {
     return (numberOfTestFixtures == 1) ? "test case" : "test cases";
-}
-
-static std::string TestSuiteLiteral(int numberOfTestSuites)
-{
-    return (numberOfTestSuites == 1) ? "test suite" : "test suites";
 }
 
 static std::string TestSuiteName(std::string name)
@@ -53,11 +43,13 @@ static std::string TestName(const std::string & suiteName,
                             const std::string & testName)
 {
     basic_ostringstream<char> stream;
-    if (!suiteName.empty())
-        stream << suiteName << ".";
+//    if (!suiteName.empty())
+//        stream << suiteName << ".";
     if (!fixtureName.empty())
-        stream << fixtureName << ".";
-    stream << testName;
+        stream << fixtureName;
+    else
+        stream << "DefaultFixture";
+    stream  << "." << testName;
     return stream.str();
 }
 

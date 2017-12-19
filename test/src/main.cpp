@@ -14,11 +14,6 @@ int Usage(UnitTestCpp::Console & console)
     return EXIT_FAILURE;
 }
 
-bool IsEqualIgnoreCase(const std::string & lhs, const std::string & rhs)
-{
-    return strcasecmp(lhs.c_str(), rhs.c_str()) == 0;
-}
-
 int main(int argc, const char * argv[])
 {
     UnitTestCpp::Console console;
@@ -40,15 +35,15 @@ int main(int argc, const char * argv[])
     if (argc > 2)
     {
         std::string option = argv[1];
-        if (IsEqualIgnoreCase(argv[1], optionXML))
+        if (UnitTestCpp::IsEqualIgnoreCase(argv[1], optionXML))
             xmlOutput = argv[2];
         else
         {
             for (int i = 1; i < argc; ++i)
             {
-                if (IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestFilter.length()), optionGtestFilter))
+                if (UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestFilter.length()), optionGtestFilter))
                     gtestEmulation = true;
-                else if (IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestColor.length()), optionGtestColor))
+                else if (UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestColor.length()), optionGtestColor))
                     gtestEmulation = true;
                 else
                     return Usage(console);
@@ -64,7 +59,7 @@ int main(int argc, const char * argv[])
 
     if (!xmlOutput.empty())
     {
-        std::basic_ofstream<char> outputFile;
+        std::ofstream outputFile;
 
         outputFile.open(xmlOutput);
         UnitTestCpp::XMLTestReporter reporter(outputFile);
