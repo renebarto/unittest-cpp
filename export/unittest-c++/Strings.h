@@ -3,39 +3,41 @@
 #include <codecvt>
 #include <locale>
 #include <string>
+#include "unittest-c++/exports.h"
 
 namespace UnitTestCpp {
-std::string Trim(const std::string & value, const std::string & stripChars);
 
-std::string TrimSpaces(const std::string & value);
+UNIT_TEST_CPP_EXPORT std::string Trim(const std::string & value, const std::string & stripChars);
 
-std::string TrimLeft(const std::string & value, const std::string & stripChars);
+UNIT_TEST_CPP_EXPORT std::string TrimSpaces(const std::string & value);
 
-std::string TrimSpacesLeft(const std::string & value);
+UNIT_TEST_CPP_EXPORT std::string TrimLeft(const std::string & value, const std::string & stripChars);
 
-std::string TrimRight(const std::string & value, const std::string & stripChars);
+UNIT_TEST_CPP_EXPORT std::string TrimSpacesLeft(const std::string & value);
 
-std::string TrimSpacesRight(const std::string & value);
+UNIT_TEST_CPP_EXPORT std::string TrimRight(const std::string & value, const std::string & stripChars);
 
-bool IsEqual(const std::string & lhs, const std::string & rhs);
+UNIT_TEST_CPP_EXPORT std::string TrimSpacesRight(const std::string & value);
 
-bool IsEqualIgnoreCase(const std::string & lhs, const std::string & rhs);
+UNIT_TEST_CPP_EXPORT bool IsEqual(const std::string & lhs, const std::string & rhs);
 
-bool IsEqual(const char * lhs, const char * rhs);
+UNIT_TEST_CPP_EXPORT bool IsEqualIgnoreCase(const std::string & lhs, const std::string & rhs);
 
-bool IsEqualIgnoreCase(const char * lhs, const char * rhs);
+UNIT_TEST_CPP_EXPORT bool IsEqual(const char * lhs, const char * rhs);
 
-bool IsEqual(const wchar_t * lhs, const wchar_t * rhs);
+UNIT_TEST_CPP_EXPORT bool IsEqualIgnoreCase(const char * lhs, const char * rhs);
 
-bool IsEqualIgnoreCase(const wchar_t * lhs, const wchar_t * rhs);
+UNIT_TEST_CPP_EXPORT bool IsEqual(const wchar_t * lhs, const wchar_t * rhs);
 
-std::string ToLower(const std::string & text);
+UNIT_TEST_CPP_EXPORT bool IsEqualIgnoreCase(const wchar_t * lhs, const wchar_t * rhs);
 
-std::string ToUpper(const std::string & text);
+UNIT_TEST_CPP_EXPORT std::string ToLower(const std::string & text);
 
-std::string Quote(const std::string & text);
+UNIT_TEST_CPP_EXPORT std::string ToUpper(const std::string & text);
 
-std::string UnQuote(const std::string & text);
+UNIT_TEST_CPP_EXPORT std::string Quote(const std::string & text);
+
+UNIT_TEST_CPP_EXPORT std::string UnQuote(const std::string & text);
 
 inline std::wstring StringToWString(const std::string & value)
 {

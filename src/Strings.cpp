@@ -1,9 +1,10 @@
 #include "unittest-c++/Strings.h"
 #include "unittest-c++/OSAL.h"
 
-using namespace UnitTestCpp;
+namespace UnitTestCpp
+{
 
-std::string UnitTestCpp::Trim(const std::string & value, const std::string & stripChars)
+std::string Trim(const std::string & value, const std::string & stripChars)
 {
     const char * find = stripChars.c_str();
 
@@ -16,7 +17,7 @@ std::string UnitTestCpp::Trim(const std::string & value, const std::string & str
     return value.substr(indexLeft, indexRight - indexLeft);
 }
 
-std::string UnitTestCpp::TrimSpaces(const std::string & value)
+std::string TrimSpaces(const std::string & value)
 {
     size_t indexLeft = 0;
     while ((indexLeft < value.length()) && isspace(value[indexLeft]))
@@ -27,7 +28,7 @@ std::string UnitTestCpp::TrimSpaces(const std::string & value)
     return value.substr(indexLeft, indexRight - indexLeft);
 }
 
-std::string UnitTestCpp::TrimLeft(const std::string & value, const std::string & stripChars)
+std::string TrimLeft(const std::string & value, const std::string & stripChars)
 {
     const char * find = stripChars.c_str();
 
@@ -37,7 +38,7 @@ std::string UnitTestCpp::TrimLeft(const std::string & value, const std::string &
     return value.substr(indexLeft, value.length() - indexLeft);
 }
 
-std::string UnitTestCpp::TrimSpacesLeft(const std::string & value)
+std::string TrimSpacesLeft(const std::string & value)
 {
     size_t indexLeft = 0;
     while ((indexLeft < value.length()) && isspace(value[indexLeft]))
@@ -45,7 +46,7 @@ std::string UnitTestCpp::TrimSpacesLeft(const std::string & value)
     return value.substr(indexLeft, value.length() - indexLeft);
 }
 
-std::string UnitTestCpp::TrimRight(const std::string & value, const std::string & stripChars)
+std::string TrimRight(const std::string & value, const std::string & stripChars)
 {
     const char * find = stripChars.c_str();
 
@@ -55,7 +56,7 @@ std::string UnitTestCpp::TrimRight(const std::string & value, const std::string 
     return value.substr(0, indexRight);
 }
 
-std::string UnitTestCpp::TrimSpacesRight(const std::string & value)
+std::string TrimSpacesRight(const std::string & value)
 {
     size_t indexRight = value.length();
     while ((indexRight > 0) && isspace(value[indexRight - 1]))
@@ -63,12 +64,12 @@ std::string UnitTestCpp::TrimSpacesRight(const std::string & value)
     return value.substr(0, indexRight - 0);
 }
 
-bool UnitTestCpp::IsEqual(const std::string & lhs, const std::string & rhs)
+bool IsEqual(const std::string & lhs, const std::string & rhs)
 {
     return (lhs == rhs);
 }
 
-bool UnitTestCpp::IsEqualIgnoreCase(const std::string & lhs, const std::string & rhs)
+bool IsEqualIgnoreCase(const std::string & lhs, const std::string & rhs)
 {
     if (lhs.size() != rhs.size())
         return false;
@@ -81,27 +82,31 @@ bool UnitTestCpp::IsEqualIgnoreCase(const std::string & lhs, const std::string &
     return true;
 }
 
-bool UnitTestCpp::IsEqual(const char * lhs, const char * rhs)
+bool IsEqual(const char * lhs, const char * rhs)
 {
     return strcmp(lhs, rhs) == 0;
 }
 
-bool UnitTestCpp::IsEqualIgnoreCase(const char * lhs, const char * rhs)
+bool IsEqualIgnoreCase(const char * lhs, const char * rhs)
 {
     return strcasecmp(lhs, rhs) == 0;
 }
 
-bool UnitTestCpp::IsEqual(const wchar_t * lhs, const wchar_t * rhs)
+bool IsEqual(const wchar_t * lhs, const wchar_t * rhs)
 {
     return wcscmp(lhs, rhs) == 0;
 }
 
-bool UnitTestCpp::IsEqualIgnoreCase(const wchar_t * lhs, const wchar_t * rhs)
+bool IsEqualIgnoreCase(const wchar_t * lhs, const wchar_t * rhs)
 {
+#if defined(LINUX) || defined(DARWIN)
     return wcscasecmp(lhs, rhs) == 0;
+#elif defined(WIN_MSVC) || defined(WIN_MINGW)
+    return _wcsicmp(lhs, rhs) == 0;
+#endif
 }
 
-std::string UnitTestCpp::ToLower(const std::string & text)
+std::string ToLower(const std::string & text)
 {
     std::string result;
     for (size_t i = 0; i < text.length(); i++)
@@ -115,7 +120,7 @@ std::string UnitTestCpp::ToLower(const std::string & text)
     return result;
 }
 
-std::string UnitTestCpp::ToUpper(const std::string & text)
+std::string ToUpper(const std::string & text)
 {
     std::string result;
     for (size_t i = 0; i < text.length(); i++)
@@ -129,7 +134,7 @@ std::string UnitTestCpp::ToUpper(const std::string & text)
     return result;
 }
 
-std::string UnitTestCpp::Quote(const std::string & text)
+std::string Quote(const std::string & text)
 {
     if ((text[0] == '\"') && (text[text.length() - 1] == '\"'))
     {
@@ -138,7 +143,7 @@ std::string UnitTestCpp::Quote(const std::string & text)
     return "\"" + text + "\"";
 }
 
-std::string UnitTestCpp::UnQuote(const std::string & text)
+std::string UnQuote(const std::string & text)
 {
     if ((text.length() >= 2) && (text[0] == '\"') && (text[text.length() - 1] == '\"'))
     {
@@ -146,3 +151,5 @@ std::string UnitTestCpp::UnQuote(const std::string & text)
     }
     return text;
 }
+
+} // namespace UnitTestCpp

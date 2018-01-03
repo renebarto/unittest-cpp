@@ -38,7 +38,7 @@ static std::string TestFixtureName(std::string name)
     return (!name.empty()) ? name : "DefaultFixture";
 }
 
-static std::string TestName(const std::string & suiteName,
+static std::string TestName(const std::string & UNUSED(suiteName),
                             const std::string & fixtureName,
                             const std::string & testName)
 {

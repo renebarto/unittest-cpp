@@ -10,9 +10,7 @@
 #elif defined(DARWIN)
 #include <unistd.h>
 #elif defined(LINUX)
-
 #include <unistd.h>
-
 #endif
 
 namespace UnitTestCpp
@@ -200,7 +198,7 @@ inline int DetermineHandle(std::ostream * stream)
     return -1;
 }
 
-inline const wchar_t * GetAnsiColorCode(ConsoleColorType color)
+inline const wchar_t * GetAnsiColorCode(ConsoleColor color)
 {
     switch (color & ConsoleColor::ColorMask)
     {
@@ -243,7 +241,7 @@ inline Console::Console(std::ostream & stream)
 {
 }
 
-inline void Console::SetTerminalColor(ConsoleColorType foregroundColor, ConsoleColorType backgroundColor)
+inline void Console::SetTerminalColor(ConsoleColor foregroundColor, ConsoleColor backgroundColor)
 {
     if (!ShouldUseColor())
         return;
@@ -317,13 +315,13 @@ inline std::ostream * DetermineStream(int handle)
 inline int DetermineHandle(std::ostream * stream)
 {
     if (stream == &std::cout)
-        return OSAL::Files::fileno(stdout);
+        return fileno(stdout);
     else if (stream == &std::cerr)
-        return OSAL::Files::fileno(stderr);
+        return fileno(stderr);
     return -1;
 }
 
-inline const char * GetAnsiColorCode(ConsoleColorType color)
+inline const char * GetAnsiColorCode(ConsoleColor color)
 {
     switch (color & ConsoleColor::ColorMask)
     {
@@ -364,7 +362,7 @@ inline Console::Console(std::ostream & stream)
 {
 }
 
-inline void Console::SetTerminalColor(ConsoleColorType foregroundColor, ConsoleColorType backgroundColor)
+inline void Console::SetTerminalColor(ConsoleColor foregroundColor, ConsoleColor backgroundColor)
 {
     if (!ShouldUseColor())
         return;
@@ -400,10 +398,10 @@ inline bool Console::ShouldUseColor()
 {
     if (_handle == InvalidHandle)
         return false;
-    if (!OSAL::Files::isatty(_handle))
+    if (!isatty(_handle))
         return false;
 
-    const char * termSetting = OSAL::System::getenv("TERM");
+    const char * termSetting = getenv("TERM");
     if (!termSetting)
         return false;
     std::string term = termSetting;
@@ -444,7 +442,7 @@ inline int DetermineHandle(std::ostream * stream)
     return -1;
 }
 
-inline const char * GetAnsiColorCode(ConsoleColorType color)
+inline const char * GetAnsiColorCode(ConsoleColor color)
 {
     switch (color & ConsoleColor::ColorMask)
     {
@@ -485,7 +483,7 @@ inline Console::Console(std::ostream & stream)
 {
 }
 
-inline void Console::SetTerminalColor(ConsoleColorType foregroundColor, ConsoleColorType backgroundColor)
+inline void Console::SetTerminalColor(ConsoleColor foregroundColor, ConsoleColor backgroundColor)
 {
     if (!ShouldUseColor())
         return;

@@ -2,6 +2,7 @@
 
 #include <unittest-c++/PrintValue.h>
 #include <unittest-c++/OSAL.h>
+#include <unittest-c++/Strings.h>
 
 using namespace std;
 
@@ -292,7 +293,7 @@ bool String::CStringEquals(const wchar_t * lhs, const wchar_t * rhs)
     if (rhs == nullptr)
         return false;
 
-    return wcscmp(lhs, rhs) == 0;
+    return IsEqual(lhs, rhs);
 }
 
 // Compares two C strings, ignoring case.  Returns true iff they have
@@ -307,7 +308,7 @@ bool String::CaseInsensitiveCStringEquals(const char * lhs, const char * rhs)
         return rhs == nullptr;
     if (rhs == nullptr)
         return false;
-    return strcasecmp(lhs, rhs) == 0;
+    return IsEqualIgnoreCase(lhs, rhs) == 0;
 }
 
 // Compares two wide C strings, ignoring case.  Returns true iff they
@@ -330,7 +331,7 @@ bool String::CaseInsensitiveCStringEquals(const wchar_t* lhs, const wchar_t* rhs
     if (rhs == nullptr)
         return false;
 
-    return wcscasecmp(lhs, rhs) == 0;
+    return IsEqualIgnoreCase(lhs, rhs) == 0;
 }
 
 // Returns true iff str ends with the given suffix, ignoring case.
