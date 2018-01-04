@@ -3,8 +3,10 @@
 #include <iostream>
 #include "unittest-c++/OSAL.h"
 #include "unittest-c++/FlagOperators.h"
+#include "unittest-c++/Strings.h"
 
 #if defined(WIN_MSVC)
+#include <io.h>
 #elif defined(WIN_MINGW)
 #include <unistd.h>
 #elif defined(DARWIN)
@@ -85,7 +87,7 @@ private:
 public:
     static const int InvalidHandle = -1;
 
-    Console(int handle = fileno(stdout));
+    Console(int handle = _fileno(stdout));
     Console(std::ostream & stream);
 
     void SetForegroundColor(ConsoleColor foregroundColor);
@@ -192,32 +194,32 @@ inline std::ostream * DetermineStream(int handle)
 inline int DetermineHandle(std::ostream * stream)
 {
     if (stream == &std::cout)
-        return OSAL::Files::fileno(stdout);
+        return _fileno(stdout);
     else if (stream == &std::cerr)
-        return OSAL::Files::fileno(stderr);
+        return _fileno(stderr);
     return -1;
 }
 
-inline const wchar_t * GetAnsiColorCode(ConsoleColor color)
+inline const char * GetAnsiColorCode(ConsoleColor color)
 {
     switch (color & ConsoleColor::ColorMask)
     {
     case ConsoleColor::Black:
-        return _("0");
+        return "0";
     case ConsoleColor::Red:
-        return _("1");
+        return "1";
     case ConsoleColor::Green:
-        return _("2");
+        return "2";
     case ConsoleColor::Yellow:
-        return _("3");
+        return "3";
     case ConsoleColor::Blue:
-        return _("4");
+        return "4";
     case ConsoleColor::Magenta:
-        return _("5");
+        return "5";
     case ConsoleColor::Cyan:
-        return _("6");
+        return "6";
     case ConsoleColor::White:
-        return _("7");
+        return "7";
     case ConsoleColor::Default:
     case ConsoleColor::Intensity:
     default:
@@ -273,14 +275,24 @@ inline void Console::SetTerminalColor(ConsoleColor foregroundColor, ConsoleColor
     _currentBackgroundColor = backgroundColor;
 }
 
+inline const char * getenv(const char * name)
+{
+    static char buffer[4096];
+    if (::GetEnvironmentVariableA(name, buffer, sizeof(buffer)) == 0)
+    {
+        return nullptr;
+    }
+    return buffer;
+}
+
 inline bool Console::ShouldUseColor()
 {
     if (_handle == InvalidHandle)
         return false;
-    if (!OSAL::Files::isatty(_handle))
+    if (!_isatty(_handle))
         return false;
 
-    const char * termSetting = OSAL::System::getenv("TERM");
+    const char * termSetting = getenv("TERM");
     if (!termSetting)
         return false;
     std::string term = termSetting;

@@ -33,7 +33,7 @@ namespace has_insertion_operator_impl
     struct has_insertion_operator {
         static std::ostream &s;
         static const T &t;
-        static bool const value = sizeof(test(s << t)) == sizeof(yes);
+        static bool const value = (sizeof(test(s << t)) == sizeof(yes));
     };
 }
 
@@ -278,7 +278,10 @@ void DefaultPrintTo(IsNotContainer /* dummy */,
             // even using reinterpret_cast, as earlier versions of gcc
             // (e.g. 3.4.5) cannot compile the cast when p is a function
             // pointer.  Casting to UInt64 first solves the problem.
+
+            WARNING_DISABLE(4826)
             stream << reinterpret_cast<const void*>(reinterpret_cast<uint64_t>(value));
+            WARNING_DEFAULT(4826)
         }
     }
 }
@@ -656,6 +659,4 @@ std::string PrintToString(const T& value)
 }
 
 } // namespace UnitTestCpp
-
-WARNING_POP
 

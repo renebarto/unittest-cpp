@@ -56,8 +56,8 @@ TEST_FIXTURE(PrintValueTest, PrintToStringString)
     EXPECT_EQ("L\"\\x4F60\\x597D\"", PrintToString(L"你好"));
     EXPECT_EQ("L\"\\x4F60\\x597D\"", PrintToString(wstring(L"你好")));
 #elif defined(WIN_MSVC)
-    EXPECT_EQ("L\"\\xE4\\xBD\\xA0\\xE5\\xA5\\xBD\""), PrintToString(L"你好");
-    EXPECT_EQ("L\"\\xE4\\xBD\\xA0\\xE5\\xA5\\xBD\""), PrintToString(wstring(L"你好"));
+    EXPECT_EQ("L\"\\xE4\\xBD\\xA0\\xE5\\xA5\\xBD\"", PrintToString(L"你好"));
+    EXPECT_EQ("L\"\\xE4\\xBD\\xA0\\xE5\\xA5\\xBD\"", PrintToString(wstring(L"你好")));
 #endif
 }
 

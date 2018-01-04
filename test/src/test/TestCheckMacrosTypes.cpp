@@ -791,14 +791,10 @@ TEST(AssertEqualFailsOnNotEqualPtr)
     {
         UnitTestCpp::TestResults testResults;
         ScopedCurrentTest scopedResults(testResults);
-#if defined(WIN_MSVC)
-#pragma warning (disable: 4312)
-#endif
+        WARNING_DISABLE(4312)
         void * x = (void*)0x12345678;
         void * y = (void*)0x87654321;
-#if defined(WIN_MSVC)
-#pragma warning (default: 4312)
-#endif
+        WARNING_DEFAULT(4312)
 		ASSERT_EQ(x, y);
         failure = (testResults.GetFailureCount() > 0);
     }
@@ -1197,15 +1193,11 @@ TEST(AssertNotEqualSucceedsOnNotEqualPtr)
         UnitTestCpp::TestResults testResults;
         ScopedCurrentTest scopedResults(testResults);
 
-#if defined(WIN_MSVC)
-#pragma warning (disable: 4312)
-#endif
-		void * x = (void*)0x12345678;
+        WARNING_DISABLE(4312)
+        void * x = (void*)0x12345678;
         void * y = (void*)0x87654321;
-#if defined(WIN_MSVC)
-#pragma warning (default: 4312)
-#endif
-		ASSERT_NE(x, y);
+        WARNING_DEFAULT(4312)
+        ASSERT_NE(x, y);
         failure = (testResults.GetFailureCount() > 0);
     }
 

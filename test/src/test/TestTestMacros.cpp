@@ -151,15 +151,11 @@ struct FixtureDtorThrows : public TestFixture
 {
     ~FixtureDtorThrows() noexcept(false)
     {
-#if defined(WIN_MSVC)
-#pragma warning (disable: 4297)
-#endif
+        WARNING_DISABLE(4297)
         // cppcheck-suppress exceptThrowInDestructor
         throw "exception";
+        WARNING_DEFAULT(4297)
     }
-#if defined(WIN_MSVC)
-#pragma warning (default: 4297)
-#endif
 
     void SetUp() {}
     void TearDown() {}

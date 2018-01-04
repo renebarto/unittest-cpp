@@ -89,7 +89,11 @@ bool IsEqual(const char * lhs, const char * rhs)
 
 bool IsEqualIgnoreCase(const char * lhs, const char * rhs)
 {
+#if defined(LINUX) || defined(DARWIN)
     return strcasecmp(lhs, rhs) == 0;
+#elif defined(WIN_MSVC) || defined(WIN_MINGW)
+    return _stricmp(lhs, rhs) == 0;
+#endif
 }
 
 bool IsEqual(const wchar_t * lhs, const wchar_t * rhs)
@@ -111,11 +115,7 @@ std::string ToLower(const std::string & text)
     std::string result;
     for (size_t i = 0; i < text.length(); i++)
     {
-#if defined(UNICODE) || defined(_UNICODE)
-        result += towlower(text[i]);
-#else
-        result += tolower(text[i]);
-#endif
+        result += static_cast<char>(tolower(text[i]));
     }
     return result;
 }
@@ -125,11 +125,7 @@ std::string ToUpper(const std::string & text)
     std::string result;
     for (size_t i = 0; i < text.length(); i++)
     {
-#if defined(UNICODE) || defined(_UNICODE)
-        result += towupper(text[i]);
-#else
-        result += toupper(text[i]);
-#endif
+        result += static_cast<char>(toupper(text[i]));
     }
     return result;
 }

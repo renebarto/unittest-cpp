@@ -57,38 +57,22 @@ inline std::string WStringToString(const std::wstring & value)
 
 inline std::string ToString(const std::string & value)
 {
-#if defined(UNICODE) || defined(_UNICODE)
-    return StringToWString(value);
-#else
     return value;
-#endif
 }
 
 inline std::string ToString(const std::wstring & value)
 {
-#if defined(UNICODE) || defined(_UNICODE)
-    return value;
-#else
     return WStringToString(value);
-#endif
 }
 
 inline std::wstring ToWideString(const std::string & value)
 {
-#if defined(UNICODE) || defined(_UNICODE)
-    return value;
-#else
     return StringToWString(value);
-#endif
 }
 
 inline std::string ToNarrowString(const std::string & value)
 {
-#if defined(UNICODE) || defined(_UNICODE)
-    return WStringToString(value);
-#else
     return value;
-#endif
 }
 
 } // namespace UnitTestCpp
