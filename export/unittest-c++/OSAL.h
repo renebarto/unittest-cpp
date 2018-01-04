@@ -69,6 +69,7 @@ WARNING_POP
 #define WARNING_PUSH
 #define WARNING_PUSH_N(level)
 #define WARNING_DISABLE(num)
+#define WARNING_DEFAULT(num)
 #define WARNING_POP
 
 #define SL32(x) x
@@ -107,6 +108,7 @@ inline std::string TypeName(const T & x)
 #define WARNING_PUSH_N(level) WARNING_PUSH
 #define WARNING_DISABLE_UNUSED_PARAMETER _Pragma("clang diagnostic ignored \"-Wunused-parameter\"")
 #define WARNING_DISABLE(num)
+#define WARNING_DEFAULT(num)
 #define WARNING_POP _Pragma("clang diagnostic pop")
 
 #include <cxxabi.h>
@@ -136,6 +138,7 @@ inline std::string TypeName(const T & x)
 #define WARNING_PUSH
 #define WARNING_PUSH_N(level)
 #define WARNING_DISABLE(num)
+#define WARNING_DEFAULT(num)
 #define WARNING_POP
 
 #define SL32(x) x
