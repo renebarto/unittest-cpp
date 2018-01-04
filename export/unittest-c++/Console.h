@@ -87,7 +87,11 @@ private:
 public:
     static const int InvalidHandle = -1;
 
+#if defined(LINUX) || defined(DARWIN)
+    Console(int handle = fileno(stdout));
+#elif defined(WIN_MSVC) || defined(WIN_MINGW)
     Console(int handle = _fileno(stdout));
+#endif
     Console(std::ostream & stream);
 
     void SetForegroundColor(ConsoleColor foregroundColor);
