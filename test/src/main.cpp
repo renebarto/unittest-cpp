@@ -32,7 +32,7 @@ int main(int argc, const char * argv[])
     {
         console << i << ": " << argv[i] << endl;
     }
-    if (argc > 2)
+    if (argc > 1)
     {
         std::string option = argv[1];
         if (UnitTestCpp::IsEqualIgnoreCase(argv[1], optionXML))
