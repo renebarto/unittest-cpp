@@ -6,7 +6,7 @@
 namespace UnitTestCpp
 {
 
-struct AssertionResult
+struct UNIT_TEST_CPP_EXPORT AssertionResult
 {
     AssertionResult(bool failed, const std::string & message) :
         failed(failed),

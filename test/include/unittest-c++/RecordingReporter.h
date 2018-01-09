@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unittest-c++/exports.h>
 #include <unittest-c++/ITestReporter.h>
 #include <unittest-c++/TestDetails.h>
 

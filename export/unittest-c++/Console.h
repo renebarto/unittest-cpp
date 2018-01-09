@@ -46,7 +46,7 @@ enum class ConsoleColor : int
     Bold = 0x10,
 };
 #elif defined(WIN_MSVC) || defined(WIN_MINGW)
-enum class ConsoleColor : int
+enum class UNIT_TEST_CPP_EXPORT ConsoleColor : int
 {
     Default = -1,
     Black = 0,
@@ -67,17 +67,17 @@ DEFINE_FLAG_OPERATORS(ConsoleColor, int);
 
 std::ostream & operator << (std::ostream & stream, ConsoleColor value);
 
-struct _SetForegroundColor
+struct UNIT_TEST_CPP_EXPORT _SetForegroundColor
 {
     ConsoleColor color;
 };
 
-struct _SetBackgroundColor
+struct UNIT_TEST_CPP_EXPORT _SetBackgroundColor
 {
     ConsoleColor color;
 };
 
-class Console
+class UNIT_TEST_CPP_EXPORT Console
 {
 private:
     // The type of basic IO manipulators (endl, ends, and flush) for narrow

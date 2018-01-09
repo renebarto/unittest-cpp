@@ -57,7 +57,7 @@ void TestResults::OnTestStart(const TestDetails & details)
         reporter->ReportTestStart(details);
 }
 
-void TestResults::OnTestFailure(const TestDetails & details,string result)
+void TestResults::OnTestFailure(const TestDetails & details, const string & result)
 {
     ++failureCount;
     if (!currentTestFailed)

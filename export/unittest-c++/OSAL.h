@@ -175,7 +175,7 @@ namespace UnitTestCpp {
 
 size_t NextPowerOfTwo(size_t value);
 
-class BaseException : public std::exception
+class UNIT_TEST_CPP_EXPORT BaseException : public std::exception
 {
 protected:
     std::string message;
@@ -250,7 +250,7 @@ private:
     }
 };
 
-class Exception : public BaseException
+class UNIT_TEST_CPP_EXPORT Exception : public BaseException
 {
 protected:
     char const * functionName;
@@ -298,7 +298,7 @@ public:
     }
 };
 
-class SystemError : public Exception
+class UNIT_TEST_CPP_EXPORT SystemError : public Exception
 {
 protected:
     int errorCode;
@@ -330,7 +330,7 @@ public:
     }
 };
 
-class RuntimeError : public Exception
+class UNIT_TEST_CPP_EXPORT RuntimeError : public Exception
 {
 public:
     RuntimeError(char const * functionName, char const * fileName, int line, std::string message)
@@ -342,7 +342,7 @@ public:
     }
 };
 
-class ArgumentException : public Exception
+class UNIT_TEST_CPP_EXPORT ArgumentException : public Exception
 {
 protected:
     std::string argument;
@@ -372,7 +372,7 @@ public:
     }
 };
 
-class ArgumentNullException : public ArgumentException
+class UNIT_TEST_CPP_EXPORT ArgumentNullException : public ArgumentException
 {
 public:
     ArgumentNullException(char const * functionName, char const * fileName, int line,

@@ -9,7 +9,7 @@ namespace UnitTestCpp
 class TestDetails;
 class TestResults;
 
-class ITestReporter
+class UNIT_TEST_CPP_EXPORT ITestReporter
 {
 public:
     virtual ~ITestReporter() {}

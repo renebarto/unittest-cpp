@@ -2,12 +2,13 @@
 
 #include <setjmp.h>
 #include <signal.h>
-#include <unittest-c++/PlatformDefines.h>
+#include "unittest-c++/exports.h"
+#include "unittest-c++/PlatformDefines.h"
 
 namespace UnitTestCpp
 {
 
-class SignalTranslator
+class UNIT_TEST_CPP_EXPORT SignalTranslator
 {
 public:
     SignalTranslator();

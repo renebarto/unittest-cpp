@@ -10,7 +10,7 @@ namespace UnitTestCpp
 
 class TestDetails;
 
-class TestDetailedResult
+class UNIT_TEST_CPP_EXPORT TestDetailedResult
 {
 public:
     TestDetailedResult() = delete;

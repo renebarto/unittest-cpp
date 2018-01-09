@@ -3,7 +3,7 @@
 namespace UnitTestCpp
 {
 
-class TestFixture
+class UNIT_TEST_CPP_EXPORT TestFixture
 {
 protected:
     TestFixture() {}

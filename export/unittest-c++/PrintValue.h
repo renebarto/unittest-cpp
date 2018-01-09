@@ -29,12 +29,14 @@ namespace has_insertion_operator_impl
     yes& test(std::ostream&);
     no test(no);
 
+WARNING_DISABLE(4365)
     template<typename T>
     struct has_insertion_operator {
         static std::ostream &s;
         static const T &t;
         static bool const value = (sizeof(test(s << t)) == sizeof(yes));
     };
+WARNING_DEFAULT(4365)
 }
 
 template<typename T>
@@ -86,11 +88,13 @@ inline bool IsTrue(bool condition) { return condition; }
 template <typename T>
 std::string PrintToString(const T& value);
 
+WARNING_DISABLE(4365)
 template <typename T>
 void DefaultPrintNonContainerTo(const T& value, std::ostream & stream)
 {
     stream << value;
 }
+WARNING_DEFAULT(4365)
 
 std::string WideStringToUtf8(const std::wstring & value);
 
@@ -653,7 +657,7 @@ public:
 template <typename T>
 std::string PrintToString(const T& value)
 {
-    std::basic_stringstream<char> ss;
+    std::ostringstream ss;
     ValuePrinter<T>::Print(value, ss);
     return ss.str();
 }

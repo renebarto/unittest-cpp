@@ -12,7 +12,7 @@ namespace UnitTestCpp
 namespace internal
 {
 
-class String
+class UNIT_TEST_CPP_EXPORT String
 {
 public:
     // Clones a 0-terminated C std::string, allocating memory using new.  The

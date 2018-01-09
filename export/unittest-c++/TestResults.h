@@ -27,7 +27,7 @@ public:
     void OnTestFixtureStart(TestFixtureInfo * fixtureInfo);
     void OnTestFixtureFinish(TestFixtureInfo * fixtureInfo, int milliSecondsElapsed);
     void OnTestStart(const TestDetails & details);
-    void OnTestFailure(const TestDetails & details, std::string message);
+    void OnTestFailure(const TestDetails & details, const std::string & message);
     void OnTestFinish(const TestDetails & details, int milliSecondsElapsed);
 
     int GetTotalTestCount() const;

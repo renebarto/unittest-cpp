@@ -2,13 +2,14 @@
 
 #include <string>
 #include <iostream>
+#include "unittest-c++/exports.h"
 
 namespace UnitTestCpp
 {
 
 class TestDetails;
 
-class TestFailure
+class UNIT_TEST_CPP_EXPORT TestFailure
 {
 public:
     TestFailure() = delete;
