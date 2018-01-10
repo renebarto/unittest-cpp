@@ -66,4 +66,21 @@ int RunSelectedTests(ITestReporter & reporter, const Predicate & predicate)
     return runner.RunTestsIf(Test::GetTestRegistry(), predicate, 0);
 }
 
+UNIT_TEST_CPP_EXPORT void ListAllTests();
+UNIT_TEST_CPP_EXPORT void ListAllTests(ITestReporter & reporter);
+
+template<class Predicate>
+void ListSelectedTests(const Predicate & predicate)
+{
+    ConsoleTestReporter reporter;
+    ListSelectedTests(reporter, predicate);
+}
+
+template<class Predicate>
+void ListSelectedTests(ITestReporter & reporter, const Predicate & predicate)
+{
+    TestRunner runner(reporter);
+    runner.ListTestsIf(Test::GetTestRegistry(), predicate);
+}
+
 } // namespace UnitTestCpp

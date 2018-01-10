@@ -4,6 +4,7 @@
 #include <unittest-c++/TestDetails.h>
 #include <unittest-c++/TestFixtureInfo.h>
 #include <unittest-c++/TestSuiteInfo.h>
+#include <unittest-c++/TestInfo.h>
 
 using namespace std;
 
@@ -73,6 +74,24 @@ void TestResults::OnTestFinish(const TestDetails & details, int milliSecondsElap
 {
     if (reporter)
         reporter->ReportTestFinish(details, !currentTestFailed, milliSecondsElapsed);
+}
+
+void TestResults::OnTestSuiteList(TestSuiteInfo * suiteInfo)
+{
+    if (reporter)
+        reporter->ReportTestSuiteEntry(suiteInfo->Name());
+}
+
+void TestResults::OnTestFixtureList(TestFixtureInfo * fixtureInfo)
+{
+    if (reporter)
+        reporter->ReportTestFixtureEntry(fixtureInfo->Name());
+}
+
+void TestResults::OnTestList(const TestDetails & details)
+{
+    if (reporter)
+        reporter->ReportTestEntry(details.testName);
 }
 
 int TestResults::GetTotalTestCount() const

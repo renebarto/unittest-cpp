@@ -12,6 +12,7 @@ class ITestReporter;
 class TestDetails;
 class TestSuiteInfo;
 class TestFixtureInfo;
+class TestInfo;
 
 class UNIT_TEST_CPP_EXPORT TestResults
 {
@@ -29,6 +30,10 @@ public:
     void OnTestStart(const TestDetails & details);
     void OnTestFailure(const TestDetails & details, const std::string & message);
     void OnTestFinish(const TestDetails & details, int milliSecondsElapsed);
+
+    void OnTestSuiteList(TestSuiteInfo * suiteInfo);
+    void OnTestFixtureList(TestFixtureInfo * fixtureInfo);
+    void OnTestList(const TestDetails & details);
 
     int GetTotalTestCount() const;
     int GetPassedTestCount() const;

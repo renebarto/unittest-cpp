@@ -27,6 +27,7 @@ public:
     TestFixtureInfo * next;
 
     template <class Predicate> void RunIf(const Predicate & predicate, int const maxTestTimeInMs, TestResults * testResults);
+    template <class Predicate> void ListIf(const Predicate & predicate, TestResults * testResults);
 
     int CountTests();
     template <typename Predicate> int CountTestsIf(Predicate predicate);
@@ -53,6 +54,19 @@ template <class Predicate> void TestFixtureInfo::RunIf(const Predicate & predica
     }
 
     testResults->OnTestFixtureFinish(this, testTimer.GetTimeInMilliSeconds());
+}
+
+template <class Predicate> void TestFixtureInfo::ListIf(const Predicate & predicate, TestResults * testResults)
+{
+    testResults->OnTestFixtureList(this);
+
+    Test * test = this->GetHead();
+    while (test)
+    {
+        if (predicate(test))
+            test->List(testResults);
+        test = test->_next;
+    }
 }
 
 template <typename Predicate> int TestFixtureInfo::CountTestsIf(Predicate predicate)

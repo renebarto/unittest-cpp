@@ -49,6 +49,8 @@ public:
 
     template <class Predicate>
     int RunTestsIf(const TestRegistry & registry, const Predicate & predicate, int maxTestTimeInMs);
+    template <class Predicate>
+    void ListTestsIf(const TestRegistry & registry, const Predicate & predicate);
 
 private:
     ITestReporter * reporter;
@@ -80,6 +82,21 @@ int TestRunner::RunTestsIf(const TestRegistry & registry,
     }
 
     return Finish(predicate);
+}
+
+template <class Predicate>
+void TestRunner::ListTestsIf(const TestRegistry & registry,
+                            const Predicate & predicate)
+{
+    TestSuiteInfo * curTestSuite = registry.GetHead();
+
+    while (curTestSuite)
+    {
+        if (predicate(curTestSuite))
+            curTestSuite->ListIf(predicate, testResults);
+
+        curTestSuite = curTestSuite->next;
+    }
 }
 
 template <class Predicate>

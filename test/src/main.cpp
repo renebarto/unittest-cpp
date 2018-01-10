@@ -24,14 +24,16 @@ int main(int argc, const char * argv[])
     std::string applicationName = argv[0];
     std::string xmlOutput;
     bool gtestEmulation{};
+    bool gtestList{};
     const std::string optionXML = "--xml";
     const std::string optionGtestFilter = "--gtest_filter=";
     const std::string optionGtestColor = "--gtest_color=";
+    const std::string optionGtestList = "--gtest_list_tests";
     console << fgcolor(UnitTestCpp::ConsoleColor::Yellow) << "Command line arguments:" << endl;
-    for (int i = 1; i < argc; ++i)
-    {
-        console << i << ": " << argv[i] << endl;
-    }
+    //for (int i = 1; i < argc; ++i)
+    //{
+    //    console << i << ": " << argv[i] << endl;
+    //}
     if (argc > 1)
     {
         std::string option = argv[1];
@@ -41,10 +43,14 @@ int main(int argc, const char * argv[])
         {
             for (int i = 1; i < argc; ++i)
             {
-                if (UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestFilter.length()), optionGtestFilter))
+                if (UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestFilter.length()), optionGtestFilter) ||
+                    UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestColor.length()), optionGtestColor))
                     gtestEmulation = true;
-                else if (UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestColor.length()), optionGtestColor))
+                else if (UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestList.length()), optionGtestList))
+                {
                     gtestEmulation = true;
+                    gtestList = true;
+                }
                 else
                     return Usage(console);
             }
@@ -66,8 +72,16 @@ int main(int argc, const char * argv[])
         result = RunAllTests(reporter);
     } else if (gtestEmulation)
     {
-        UnitTestCpp::ConsoleGoogleTestReporter reporter;
-        result = RunAllTests(reporter);
+        if (gtestList)
+        {
+            UnitTestCpp::ConsoleGoogleTestReporter reporter;
+            ListAllTests(reporter);
+        }
+        else
+        {
+            UnitTestCpp::ConsoleGoogleTestReporter reporter;
+            result = RunAllTests(reporter);
+        }
     } else
     {
         UnitTestCpp::ConsoleTestReporter reporter;

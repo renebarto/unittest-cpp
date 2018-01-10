@@ -29,6 +29,7 @@ public:
     static TestRegistry & GetTestRegistry();
 
     void Run(int const maxTestTimeInMs, TestResults * testResults);
+    void List(TestResults * testResults);
 
     virtual void RunImpl() const;
 };

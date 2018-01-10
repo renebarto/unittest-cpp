@@ -32,6 +32,16 @@ int RunAllTests(ITestReporter & reporter)
     return RunSelectedTests(reporter, True());
 }
 
+void ListAllTests()
+{
+    ListSelectedTests(True());
+}
+
+void ListAllTests(ITestReporter & reporter)
+{
+    ListSelectedTests(reporter, True());
+}
+
 TestRunner::TestRunner(ITestReporter & reporter)
     : reporter(&reporter)
     , testResults(new TestResults(&reporter))

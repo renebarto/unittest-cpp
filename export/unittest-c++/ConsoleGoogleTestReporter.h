@@ -53,6 +53,10 @@ private:
 
     virtual void ReportTestFailure(const TestDetails & test, const std::string & failure) override;
 
+    virtual void ReportTestSuiteEntry(const std::string & suiteName) override;
+    virtual void ReportTestFixtureEntry(const std::string & fixtureName) override;
+    virtual void ReportTestEntry(const std::string & testName) override;
+
     using ResultList = std::vector<TestDetailedResult>;
     ResultList & Results()
     {

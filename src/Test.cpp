@@ -50,6 +50,13 @@ void Test::Run(int const UNUSED(maxTestTimeInMs),
     testResults->OnTestFinish(_details, testTimer.GetTimeInMilliSeconds());
 }
 
+void Test::List(TestResults * testResults)
+{
+    CurrentTest::Results() = testResults;
+
+    testResults->OnTestList(_details);
+}
+
 void Test::Run()
 {
     ExecuteTest(*this, _details);

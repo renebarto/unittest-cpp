@@ -105,6 +105,10 @@ public:
         lastFailedMessage = failure;
     }
 
+    virtual void ReportTestSuiteEntry(const std::string & UNUSED(suiteName)) {}
+    virtual void ReportTestFixtureEntry(const std::string & UNUSED(fixtureName)) {}
+    virtual void ReportTestEntry(const std::string & UNUSED(testName)) {}
+
     int testRunCount;
     std::string lastStartedSuite;
     std::string lastStartedFixture;

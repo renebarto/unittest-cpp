@@ -40,6 +40,9 @@ public:
                                   int milliSecondsElapsed) = 0;
     virtual void ReportTestFailure(const TestDetails & details,
                                    const std::string & failure) = 0;
+    virtual void ReportTestSuiteEntry(const std::string & suiteName) = 0;
+    virtual void ReportTestFixtureEntry(const std::string & fixtureName) = 0;
+    virtual void ReportTestEntry(const std::string & testName) = 0;
 };
 
 } // namespace UnitTestCpp

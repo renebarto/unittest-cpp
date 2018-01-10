@@ -208,7 +208,20 @@ void ConsoleGoogleTestReporter::ReportTestFailure(TestDetails const& details, co
     _console << details.fileName << ":" << details.lineNumber << ": Failure" << endl;
     _console << failure << endl;
     _results.push_back(detailedResult);
-    //DeferredTestReporter::ReportTestFailure(details, failure);
+}
+
+void ConsoleGoogleTestReporter::ReportTestSuiteEntry(const std::string & UNUSED(suiteName))
+{
+}
+
+void ConsoleGoogleTestReporter::ReportTestFixtureEntry(const std::string & fixtureName)
+{
+    _console << TestFixtureName(fixtureName) << "." << endl;
+}
+
+void ConsoleGoogleTestReporter::ReportTestEntry(const std::string & testName)
+{
+    _console << "  " << testName << endl;
 }
 
 } // namespace UnitTestCpp

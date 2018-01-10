@@ -72,6 +72,19 @@ void DeferredTestReporter::ReportTestFailure(const TestDetails & details, const 
     result.AddFailure(TestDetailedResult::Failure(details.lineNumber, failure));
 }
 
+void DeferredTestReporter::ReportTestSuiteEntry(const std::string & UNUSED(suiteName))
+{
+}
+
+void DeferredTestReporter::ReportTestFixtureEntry(const std::string & UNUSED(fixtureName))
+{
+}
+
+void DeferredTestReporter::ReportTestEntry(const std::string & UNUSED(testName))
+{
+}
+
+
 DeferredTestReporter::ResultList & DeferredTestReporter::Results()
 {
     return _results;

@@ -150,4 +150,19 @@ void ConsoleTestReporter::ReportTestFailure(TestDetails const& details, const st
     DeferredTestReporter::ReportTestFailure(details, failure);
 }
 
+void ConsoleTestReporter::ReportTestSuiteEntry(const std::string & suiteName)
+{
+    _stream << suiteName << "." << endl;
+}
+
+void ConsoleTestReporter::ReportTestFixtureEntry(const std::string & fixtureName)
+{
+    _stream << "    " << fixtureName << "." << endl;
+}
+
+void ConsoleTestReporter::ReportTestEntry(const std::string & testName)
+{
+    _stream << "        " << testName << endl;
+}
+
 } // namespace UnitTestCpp
