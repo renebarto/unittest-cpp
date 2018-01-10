@@ -30,13 +30,8 @@ int main(int argc, const char * argv[])
     const std::string optionGtestColor = "--gtest_color=";
     const std::string optionGtestList = "--gtest_list_tests";
     console << fgcolor(UnitTestCpp::ConsoleColor::Yellow) << "Command line arguments:" << endl;
-    //for (int i = 1; i < argc; ++i)
-    //{
-    //    console << i << ": " << argv[i] << endl;
-    //}
     if (argc > 1)
     {
-        std::string option = argv[1];
         if (UnitTestCpp::IsEqualIgnoreCase(argv[1], optionXML))
             xmlOutput = argv[2];
         else
