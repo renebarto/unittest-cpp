@@ -12,8 +12,8 @@ protected:
 
     TestFixture & operator = (const TestFixture &) = delete;
 
-    virtual void SetUp() = 0;
-    virtual void TearDown() = 0;
+    virtual void SetUp() {}
+    virtual void TearDown() {}
 
 private:
     void Setup(); // Guard against incorrect override
