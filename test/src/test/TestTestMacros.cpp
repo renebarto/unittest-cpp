@@ -32,8 +32,6 @@ struct ThrowingThingie : public TestFixture
         if (!dummy)
             throw "Oops";
     }
-    void SetUp() {}
-    void TearDown() {}
 
     bool dummy;
 };
@@ -60,8 +58,6 @@ TEST (ExceptionsInFixtureAreReportedAsHappeningInTheFixture)
 struct DummyFixture : public TestFixture
 {
     int x;
-    void SetUp() {}
-    void TearDown() {}
 };
 
 // We're really testing the macros so we just want them to compile and link
@@ -123,8 +119,6 @@ WARNING_PUSH
 WARNING_DISABLE(4702)
     FixtureCtorThrows()    { throw "exception"; }
 WARNING_POP
-    void SetUp() {}
-    void TearDown() {}
 };
 
 TestRegistry throwingFixtureTestRegistry1;
@@ -156,9 +150,6 @@ struct FixtureDtorThrows : public TestFixture
         throw "exception";
         WARNING_DEFAULT(4297)
     }
-
-    void SetUp() {}
-    void TearDown() {}
 };
 
 TestRegistry throwingFixtureTestRegistry2;
@@ -192,8 +183,6 @@ struct FixtureCtorAsserts : public TestFixture
     {
         UnitTestCpp::ReportAssert("assert failure", "file", FailingLine);
     }
-    void SetUp() {}
-    void TearDown() {}
 };
 
 TestRegistry ctorAssertFixtureTestRegistry;

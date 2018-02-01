@@ -12,9 +12,6 @@ namespace _Test
 
 class AssertMacrosTest : public UnitTestCpp::TestFixture
 {
-public:
-    virtual void SetUp() {}
-    virtual void TearDown() {}
 };
 
 TEST_SUITE(unit_test_cpp)

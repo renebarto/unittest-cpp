@@ -133,8 +133,6 @@ struct SimpleFixture : public UnitTestCpp::TestFixture
     {
         --instanceCount;
     }
-    void SetUp() {}
-    void TearDown() {}
 
     static int instanceCount;
 };

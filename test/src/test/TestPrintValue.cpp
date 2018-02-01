@@ -13,16 +13,6 @@ TEST_SUITE(PrintValue)
 class PrintValueTest
     : public UnitTestCpp::TestFixture
 {
-public:
-    void SetUp()
-    {
-
-    }
-
-    void TearDown()
-    {
-
-    }
 };
 
 TEST_FIXTURE(PrintValueTest, PrintToStringSimple)
