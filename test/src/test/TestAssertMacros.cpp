@@ -25,6 +25,14 @@ TEST_FIXTURE(AssertMacrosTest, AssertExpectNull)
     ASSERT_NULL(nullPtr);
 }
 
+TEST_FIXTURE(AssertMacrosTest, AssertExpectNotNullCharPtr)
+{
+    const char * charPtr = "ABCD";
+
+    EXPECT_NOT_NULL(charPtr);
+    ASSERT_NOT_NULL(charPtr);
+}
+
 TEST_FIXTURE(AssertMacrosTest, AssertExpectNotNull)
 {
     void * nonNullPtr = reinterpret_cast<void *>(0x12345678);

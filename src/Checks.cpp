@@ -15,6 +15,11 @@ AssertionResult CheckStringsEqual(const std::string & expectedExpression,
     if (expected == actual)
         return AssertionSuccess();
 
+    if ((expected == nullptr) || (actual == nullptr))
+    {
+        return EqFailure(expectedExpression, actualExpression,
+                         expected ? expected : "nullptr", actual ? actual : "nullptr");
+    }
     if (strcmp(expected, actual))
     {
         return EqFailure(expectedExpression, actualExpression, expected, actual);
@@ -29,6 +34,11 @@ AssertionResult CheckStringsEqual(const std::string & expectedExpression,
     if (expected == actual)
         return AssertionSuccess();
 
+    if ((expected == nullptr) || (actual == nullptr))
+    {
+        return EqFailure(expectedExpression, actualExpression,
+                         expected ? expected : L"nullptr", actual ? actual : L"nullptr");
+    }
     if (wcscmp(expected, actual))
     {
         return EqFailure(expectedExpression, actualExpression, expected, actual);
@@ -43,6 +53,10 @@ AssertionResult CheckStringsNotEqual(const std::string & expectedExpression,
     if (expected == actual)
         return InEqFailure(expectedExpression, actualExpression, expected, actual);
 
+    if ((expected == nullptr) || (actual == nullptr))
+    {
+        return AssertionSuccess();
+    }
     if (!strcmp(expected, actual))
     {
         return InEqFailure(expectedExpression, actualExpression, expected, actual);
@@ -57,6 +71,10 @@ AssertionResult CheckStringsNotEqual(const std::string & expectedExpression,
     if (expected == actual)
         return InEqFailure(expectedExpression, actualExpression, expected, actual);
 
+    if ((expected == nullptr) || (actual == nullptr))
+    {
+        return AssertionSuccess();
+    }
     if (!wcscmp(expected, actual))
     {
         return InEqFailure(expectedExpression, actualExpression, expected, actual);
