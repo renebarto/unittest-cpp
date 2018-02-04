@@ -1,13 +1,13 @@
-#include <unittest-c++/StreamTestReporter.h>
+#include <unittest-cpp/StreamTestReporter.h>
 
 #include <cstdio>
 #include <sstream>
 #include <iomanip>
-#include <unittest-c++/TestDetails.h>
-#include <unittest-c++/TestDetailedResult.h>
-#include <unittest-c++/TestResults.h>
+#include <unittest-cpp/TestDetails.h>
+#include <unittest-cpp/TestDetailedResult.h>
+#include <unittest-cpp/TestResults.h>
 
-#include <unittest-c++/Unused.h>
+#include <unittest-cpp/Unused.h>
 
 using namespace std;
 

@@ -1,6 +1,6 @@
-#include <unittest-c++/UnitTestC++.h>
-#include "unittest-c++/CurrentTest.h"
-#include "unittest-c++/ScopedCurrentTest.h"
+#include <unittest-cpp/UnitTestC++.h>
+#include "unittest-cpp/CurrentTest.h"
+#include "unittest-cpp/ScopedCurrentTest.h"
 
 using namespace std;
 

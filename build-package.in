@@ -18,8 +18,8 @@ cp $source_dir/copyright $install_dir/../
 chmod 644 $install_dir/../copyright
 cp $source_dir/changelog $install_dir/../
 chmod 644 $install_dir/../changelog
-sed -e 's/^prefix=\(.*\)/prefix=\/usr/' < $install_dir/share/pkgconfig/unittest-c++.pc > $install_dir/share/pkgconfig/unittest-c++.pc_
-rm $install_dir/share/pkgconfig/unittest-c++.pc
-mv $install_dir/share/pkgconfig/unittest-c++.pc_ $install_dir/share/pkgconfig/unittest-c++.pc
+sed -e 's/^prefix=\(.*\)/prefix=\/usr/' < $install_dir/share/pkgconfig/unittest-cpp.pc > $install_dir/share/pkgconfig/unittest-cpp.pc_
+rm $install_dir/share/pkgconfig/unittest-cpp.pc
+mv $install_dir/share/pkgconfig/unittest-cpp.pc_ $install_dir/share/pkgconfig/unittest-cpp.pc
 
-fakeroot dpkg-deb --build $install_dir/.. $source_dir/unittest-c++-@PACKAGE_VERSION@-1.deb
+fakeroot dpkg-deb --build $install_dir/.. $source_dir/unittest-cpp-@PACKAGE_VERSION@-1.deb

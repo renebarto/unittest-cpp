@@ -1,6 +1,6 @@
-#include <unittest-c++/TestDetailedResult.h>
+#include <unittest-cpp/TestDetailedResult.h>
 
-#include <unittest-c++/TestDetails.h>
+#include <unittest-cpp/TestDetails.h>
 
 using namespace std;
 

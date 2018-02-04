@@ -1,4 +1,4 @@
-#include <unittest-c++/Settings.h>
+#include <unittest-cpp/Settings.h>
 
 namespace UnitTestCpp
 {

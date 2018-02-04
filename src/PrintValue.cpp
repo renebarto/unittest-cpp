@@ -1,6 +1,6 @@
-#include <unittest-c++/PrintValue.h>
+#include <unittest-cpp/PrintValue.h>
 
-#include <unittest-c++/internal/UtString.h>
+#include <unittest-cpp/internal/UtString.h>
 
 using namespace std;
 

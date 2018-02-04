@@ -1,7 +1,7 @@
-#include <unittest-c++/UnitTestC++.h>
-#include "unittest-c++/ReportAssert.h"
-#include "unittest-c++/RecordingReporter.h"
-#include "unittest-c++/ScopedCurrentTest.h"
+#include <unittest-cpp/UnitTestC++.h>
+#include "unittest-cpp/ReportAssert.h"
+#include "unittest-cpp/RecordingReporter.h"
+#include "unittest-cpp/ScopedCurrentTest.h"
 
 using namespace std;
 

@@ -1,8 +1,8 @@
-#include <unittest-c++/DeferredTestReporter.h>
+#include <unittest-cpp/DeferredTestReporter.h>
 
-#include <unittest-c++/TestDetails.h>
+#include <unittest-cpp/TestDetails.h>
 
-#include <unittest-c++/Unused.h>
+#include <unittest-cpp/Unused.h>
 
 using namespace std;
 

@@ -1,8 +1,8 @@
-#include <unittest-c++/XMLTestReporter.h>
+#include <unittest-cpp/XMLTestReporter.h>
 
 #include <sstream>
-#include <unittest-c++/TestFailure.h>
-#include <unittest-c++/TestResults.h>
+#include <unittest-cpp/TestFailure.h>
+#include <unittest-cpp/TestResults.h>
 
 using namespace std;
 

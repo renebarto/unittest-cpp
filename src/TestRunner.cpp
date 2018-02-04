@@ -1,6 +1,6 @@
-#include <unittest-c++/TestRunner.h>
+#include <unittest-cpp/TestRunner.h>
 
-#include <unittest-c++/UnitTestC++.h>
+#include <unittest-cpp/UnitTestC++.h>
 
 using namespace std;
 

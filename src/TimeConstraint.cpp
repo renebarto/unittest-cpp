@@ -1,8 +1,8 @@
-#include <unittest-c++/TimeConstraint.h>
+#include <unittest-cpp/TimeConstraint.h>
 
 #include <sstream>
-#include <unittest-c++/CurrentTest.h>
-#include <unittest-c++/TestResults.h>
+#include <unittest-cpp/CurrentTest.h>
+#include <unittest-cpp/TestResults.h>
 
 using namespace std;
 

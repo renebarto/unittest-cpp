@@ -1,13 +1,13 @@
-project(unittest-c++.test CXX)
+project(unittest-cpp.test CXX)
 
 include(setup_target_properties_executable)
 include(show_target_properties)
 
-message("\n** Setting up unittest-c++.test **\n")
+message("\n** Setting up unittest-cpp.test **\n")
 
 set(PACKAGE_NAME ${PROJECT_NAME})
 set(TARGET_NAME ${PROJECT_NAME})
-set(PACKAGE_DESCRIPTION "Unittest-C++ test application")
+set(PACKAGE_DESCRIPTION "unittest-cpp test application")
 set(PACKAGE_VERSION_MAJOR 1)
 set(PACKAGE_VERSION_MINOR 0)
 set(PACKAGE_VERSION_MICRO 0)
@@ -21,10 +21,12 @@ set(PACKAGE_COMPILER_DEFINITIONS
 
 set(PACKAGE_COMPILER_OPTIONS
     ${COMPILER_OPTIONS_CXX}
-    )
+    -static-libgcc
+    -static-libstdc++)
 
 set(PACKAGE_INCLUDE_DIRS
-    ${PROJECT_SOURCE_DIR}/include
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
     )
 
 set(PACKAGE_LINK_OPTIONS
@@ -32,7 +34,7 @@ set(PACKAGE_LINK_OPTIONS
     ${LINK_RPATH})
 
 set(PACKAGE_DEPENDENCIES
-    unittest-c++)
+    unittest-cpp)
 
 set(PACKAGE_LIBS
     ${CMAKE_THREAD_LIBS_INIT}
@@ -56,8 +58,8 @@ if (NOT LOCAL_BUILD)
     add_install_target(${PACKAGE_NAME} install-components)
     add_uninstall_target(${PACKAGE_NAME} uninstall-components)
 
-    install(TARGETS ${PROJECT_NAME}
-        RUNTIME
-        DESTINATION ${PKGCONFIG_FILE_BIN_DIR}
-        COMPONENT ${PROJECT_NAME})
+    install(TARGETS ${PACKAGE_NAME}
+        EXPORT unittest-cpp
+        RUNTIME DESTINATION ${PKGCONFIG_FILE_BIN_DIR}
+        COMPONENT ${PACKAGE_NAME})
 endif()

@@ -1,11 +1,11 @@
-#include <unittest-c++/UnitTestC++.h>
+#include <unittest-cpp/UnitTestC++.h>
 
 #include <fstream>
-#include "unittest-c++/OSAL.h"
-#include "unittest-c++/Console.h"
-#include "unittest-c++/ConsoleGoogleTestReporter.h"
+#include "unittest-cpp/OSAL.h"
+#include "unittest-cpp/Console.h"
+#include "unittest-cpp/ConsoleGoogleTestReporter.h"
 
-static const std::string moduleName = "unittest-c++";
+static const std::string moduleName = "unittest-cpp";
 
 int Usage(UnitTestCpp::Console & console)
 {

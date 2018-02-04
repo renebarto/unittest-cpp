@@ -1,10 +1,10 @@
 Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
-Name: unittest-c++
+Name: unittest-cpp
 Maintainer: Rene Barto <rene.barto66@gmail.com>
 Source: http://github.com/renebarto/unittest-cpp
 License: MIT License
 
-UnitTest-c++ is based on google test (for printing values and test definitions), and UnitTest++.
+unittest-cpp is based on google test (for printing values and test definitions), and UnitTest++.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

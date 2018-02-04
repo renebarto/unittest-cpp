@@ -1,10 +1,10 @@
-#include <unittest-c++/TestResults.h>
+#include <unittest-cpp/TestResults.h>
 
-#include <unittest-c++/ITestReporter.h>
-#include <unittest-c++/TestDetails.h>
-#include <unittest-c++/TestFixtureInfo.h>
-#include <unittest-c++/TestSuiteInfo.h>
-#include <unittest-c++/TestInfo.h>
+#include <unittest-cpp/ITestReporter.h>
+#include <unittest-cpp/TestDetails.h>
+#include <unittest-cpp/TestFixtureInfo.h>
+#include <unittest-cpp/TestSuiteInfo.h>
+#include <unittest-cpp/TestInfo.h>
 
 using namespace std;
 

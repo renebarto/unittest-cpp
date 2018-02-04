@@ -1,5 +1,5 @@
-#include <unittest-c++/UnitTestC++.h>
-#include "unittest-c++/ScopedCurrentTest.h"
+#include <unittest-cpp/UnitTestC++.h>
+#include "unittest-cpp/ScopedCurrentTest.h"
 
 namespace UnitTestCpp
 {

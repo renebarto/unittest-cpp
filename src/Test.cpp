@@ -1,11 +1,11 @@
-#include <unittest-c++/Test.h>
+#include <unittest-cpp/Test.h>
 
-#include <unittest-c++/CurrentTest.h>
-#include <unittest-c++/ExecuteTest.h>
-#include <unittest-c++/TestRegistry.h>
+#include <unittest-cpp/CurrentTest.h>
+#include <unittest-cpp/ExecuteTest.h>
+#include <unittest-cpp/TestRegistry.h>
 
 #ifdef UNITTEST_POSIX
-#include <unittest-c++/SignalTranslator.h>
+#include <unittest-cpp/SignalTranslator.h>
 #endif
 
 using namespace std;

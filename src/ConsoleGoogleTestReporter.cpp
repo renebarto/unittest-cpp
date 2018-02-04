@@ -1,9 +1,9 @@
-#include <unittest-c++/ConsoleGoogleTestReporter.h>
+#include <unittest-cpp/ConsoleGoogleTestReporter.h>
 
 #include <iomanip>
-#include <unittest-c++/TestDetails.h>
-#include <unittest-c++/TestResults.h>
-#include <unittest-c++/TestDetailedResult.h>
+#include <unittest-cpp/TestDetails.h>
+#include <unittest-cpp/TestResults.h>
+#include <unittest-cpp/TestDetailedResult.h>
 
 using namespace std;
 

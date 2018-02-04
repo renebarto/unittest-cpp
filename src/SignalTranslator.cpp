@@ -1,4 +1,4 @@
-#include <unittest-c++/SignalTranslator.h>
+#include <unittest-cpp/SignalTranslator.h>
 
 namespace UnitTestCpp
 {

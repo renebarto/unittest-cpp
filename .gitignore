@@ -1,4 +1,4 @@
-unittest-c++.pc
+unittest-cpp.pc
 /output/
 /.idea/
 /cmake-*/

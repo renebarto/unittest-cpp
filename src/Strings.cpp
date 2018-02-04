@@ -1,5 +1,5 @@
-#include "unittest-c++/Strings.h"
-#include "unittest-c++/OSAL.h"
+#include "unittest-cpp/Strings.h"
+#include "unittest-cpp/OSAL.h"
 
 namespace UnitTestCpp
 {
@@ -89,9 +89,9 @@ bool IsEqual(const char * lhs, const char * rhs)
 
 bool IsEqualIgnoreCase(const char * lhs, const char * rhs)
 {
-#if defined(LINUX) || defined(DARWIN)
+#if defined(LINUX) || defined(DARWIN) || defined(WIN_MINGW)
     return strcasecmp(lhs, rhs) == 0;
-#elif defined(WIN_MSVC) || defined(WIN_MINGW)
+#elif defined(WIN_MSVC)
     return _stricmp(lhs, rhs) == 0;
 #endif
 }

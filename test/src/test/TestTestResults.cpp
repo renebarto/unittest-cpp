@@ -1,5 +1,5 @@
-#include <unittest-c++/UnitTestC++.h>
-#include "unittest-c++/RecordingReporter.h"
+#include <unittest-cpp/UnitTestC++.h>
+#include "unittest-cpp/RecordingReporter.h"
 
 namespace UnitTestCpp
 {

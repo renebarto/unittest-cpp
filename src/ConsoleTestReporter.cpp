@@ -1,8 +1,8 @@
-#include <unittest-c++/ConsoleTestReporter.h>
+#include <unittest-cpp/ConsoleTestReporter.h>
 
 #include <iomanip>
-#include <unittest-c++/TestDetails.h>
-#include <unittest-c++/TestResults.h>
+#include <unittest-cpp/TestDetails.h>
+#include <unittest-cpp/TestResults.h>
 
 using namespace std;
 

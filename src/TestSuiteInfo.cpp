@@ -1,4 +1,4 @@
-#include <unittest-c++/TestSuiteInfo.h>
+#include <unittest-cpp/TestSuiteInfo.h>
 
 #include <cassert>
 

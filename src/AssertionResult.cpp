@@ -1,8 +1,8 @@
-#include <unittest-c++/AssertionResult.h>
+#include <unittest-cpp/AssertionResult.h>
 
 #include <sstream>
-#include <unittest-c++/PrintValue.h>
-#include <unittest-c++/Unused.h>
+#include <unittest-cpp/PrintValue.h>
+#include <unittest-cpp/Unused.h>
 
 using namespace std;
 

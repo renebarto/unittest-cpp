@@ -1,4 +1,4 @@
-unittest-c++ (1.0.0-1) unstable;
+unittest-cpp (1.0.0-1) unstable;
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
 

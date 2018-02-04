@@ -1,4 +1,4 @@
-#include <unittest-c++/TestRegistry.h>
+#include <unittest-cpp/TestRegistry.h>
 
 #include <cassert>
 

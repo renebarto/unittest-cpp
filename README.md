@@ -2,7 +2,7 @@
 
 Unit testing framework for C++
 
-UnitTest-c++ is bases on google test (for printing values and test definitions), and UnitTest++.
+Unittest-cpp is bases on google test (for printing values and test definitions), and UnitTest++.
 
 Copyright (c) 2017 Rene Barto
 

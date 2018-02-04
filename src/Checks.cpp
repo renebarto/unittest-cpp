@@ -1,4 +1,4 @@
-#include <unittest-c++/Checks.h>
+#include <unittest-cpp/Checks.h>
 
 using namespace std;
 

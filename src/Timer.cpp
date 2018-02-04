@@ -1,4 +1,4 @@
-#include <unittest-c++/Timer.h>
+#include <unittest-cpp/Timer.h>
 #if defined(LINUX) || defined(DARWIN)
 #include <unistd.h>
 #include <sys/time.h>
