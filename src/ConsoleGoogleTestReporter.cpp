@@ -66,7 +66,7 @@ void ConsoleGoogleTestReporter::ReportTestRunStart(int UNUSED(numberOfTestSuites
                                                    int numberOfTestFixtures,
                                                    int numberOfTests)
 {
-    _console << "Running main() from gtest_main.cc" << endl;
+    _console << "Running main() from gtest_main.cc" << endl << flush;
     PrintHeader(_console, ::UnitTestCpp::TestRunSeparator, ConsoleColor::Green);
 
     _console << " Running " << numberOfTests << " " << TestLiteral(numberOfTests)
