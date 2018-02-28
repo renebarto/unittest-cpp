@@ -3,6 +3,7 @@
 #include <unittest-cpp/TestSuite.h>
 #include <unittest-cpp/TestRegistry.h>
 #include <unittest-cpp/ExecuteTest.h>
+#include <unittest-cpp/AssertException.h>
 
 #define TEST_EX(Name, List)                                                                        \
 class Test##Name : public UnitTestCpp::Test                                                        \
