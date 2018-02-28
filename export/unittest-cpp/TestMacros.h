@@ -66,9 +66,7 @@ void Test##Fixture##Name::RunImpl() const                                       
             UnitTestCpp::TestDetails(_details.testName,                                            \
                                      _details.fixtureName,                                         \
                                      _details.suiteName,                                           \
-                                     e.Filename(),                                                 \
-                                     e.LineNumber()),                                              \
-                                     e.what());                                                    \
+                                     e), e.what());                                                \
     }                                                                                              \
     catch (const std::exception & e)                                                               \
     {                                                                                              \

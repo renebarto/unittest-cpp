@@ -31,7 +31,7 @@ void ExecuteTest(T & testObject, const TestDetails & details)
     }
     catch (const AssertException & e)
     {
-        CurrentTest::Results()->OnTestFailure(TestDetails(details.testName, details.fixtureName, details.suiteName, e.Filename(), e.LineNumber()), e.what());
+        CurrentTest::Results()->OnTestFailure(TestDetails(details.testName, details.fixtureName, details.suiteName, e), e.what());
     }
     catch (const AssertionFailedException &)
     {
