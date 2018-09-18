@@ -77,7 +77,7 @@ struct UNIT_TEST_CPP_EXPORT _SetBackgroundColor
     ConsoleColor color;
 };
 
-class UNIT_TEST_CPP_EXPORT Console
+class Console
 {
 private:
     // The type of basic IO manipulators (endl, ends, and flush) for narrow

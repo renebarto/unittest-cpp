@@ -88,8 +88,7 @@ set(PACKAGE_COMPILER_DEFINITIONS
 
 set(PACKAGE_COMPILER_OPTIONS
     ${COMPILER_OPTIONS_CXX}
-    -static-libgcc
-    -static-libstdc++)
+    ${PLATFORM_LIBRARIES_STATIC})
 
 set(PACKAGE_INCLUDE_DIRS
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
@@ -150,7 +149,7 @@ if (NOT LOCAL_BUILD)
 
     install(TARGETS ${PACKAGE_NAME}
         EXPORT unittest-cpp
-        DESTINATION ${PKGCONFIG_FILE_LIB_DIR}
+        DESTINATION ${PKGCONFIG_FILE_SHARED_LIB_DIR}
         COMPONENT ${PACKAGE_NAME})
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/export/${PACKAGE_NAME}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/include
@@ -159,7 +158,7 @@ if (NOT LOCAL_BUILD)
     if (WIN_MSVC OR MINGW)
         message(STATUS "Exporting ${PACKAGE_NAME}")
         install(EXPORT unittest-cpp
-            DESTINATION ${CMAKE_INSTALL_PREFIX}
+            DESTINATION "${CMAKE_INSTALL_PREFIX}"
             COMPONENT ${PACKAGE_NAME})
     endif()
 endif()
