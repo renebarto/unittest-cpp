@@ -1,6 +1,10 @@
 mkdir cmake-msvc-debug
-cd cmake-msvc-debug
+pushd cmake-msvc-debug
 del CMakeCache.txt
+setlocal
+set ProjectRoot=F:/My_Projects
+
 call "%VS140COMNTOOLS%..\..\VC\vcvarsall.bat"
-cmake .. -DSCRIPTS_DIR="F:/VisualStudio2017Projects/cmake-scripts" -DCMAKE_INSTALL_PREFIX="F:\VisualStudio2017Projects\install-msvc" -DPLATFORM_INSTALL="F:\VisualStudio2017Projects\install-msvc" -G "Visual Studio 14 2015 Win64"
-cd ..
+cmake .. -DCMAKE_BUILD_TYPE=Debug -DSCRIPTS_DIR="%ProjectRoot%/cmake-scripts" -DCMAKE_INSTALL_PREFIX="%ProjectRoot%/install-msvc" -DPLATFORM_INSTALL="%ProjectRoot%/install-msvc" -G "Visual Studio 14 2015 Win64"
+endlocal
+popd
