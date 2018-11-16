@@ -1,6 +1,7 @@
 #include <unittest-cpp/ConsoleGoogleTestReporter.h>
 
 #include <iomanip>
+#include <unittest-cpp/Console.h>
 #include <unittest-cpp/TestDetails.h>
 #include <unittest-cpp/TestResults.h>
 #include <unittest-cpp/TestDetailedResult.h>
@@ -62,19 +63,24 @@ void PrintHeader(Console & console, const std::string & header, ConsoleColor col
         console.ResetTerminalColor();
 }
 
+ConsoleGoogleTestReporter::ConsoleGoogleTestReporter()
+    : _console(std::make_shared<Console>(std::cout))
+    , _results()
+{}
+
 void ConsoleGoogleTestReporter::ReportTestRunStart(int UNUSED(numberOfTestSuites),
                                                    int numberOfTestFixtures,
                                                    int numberOfTests)
 {
-    _console << "Running main() from gtest_main.cc" << endl << flush;
-    PrintHeader(_console, ::UnitTestCpp::TestRunSeparator, ConsoleColor::Green);
+    *_console << "Running main() from gtest_main.cc" << endl << flush;
+    PrintHeader(*_console, ::UnitTestCpp::TestRunSeparator, ConsoleColor::Green);
 
-    _console << " Running " << numberOfTests << " " << TestLiteral(numberOfTests)
-            << " from " << numberOfTestFixtures << " " << TestFixtureLiteral(numberOfTestFixtures) << "." << endl;
+    *_console << " Running " << numberOfTests << " " << TestLiteral(numberOfTests)
+              << " from " << numberOfTestFixtures << " " << TestFixtureLiteral(numberOfTestFixtures) << "." << endl;
 
-    PrintHeader(_console, ::UnitTestCpp::TestFixtureSeparator, ConsoleColor::Green);
+    PrintHeader(*_console, ::UnitTestCpp::TestFixtureSeparator, ConsoleColor::Green);
 
-    _console << " Global test environment set-up." << endl;
+    *_console << " Global test environment set-up." << endl;
 }
 
 void ConsoleGoogleTestReporter::ReportTestRunFinish(int UNUSED(numberOfTestSuites),
@@ -86,27 +92,27 @@ void ConsoleGoogleTestReporter::ReportTestRunFinish(int UNUSED(numberOfTestSuite
 
 void ConsoleGoogleTestReporter::ReportTestRunSummary(const TestResults * results, int milliSecondsElapsed)
 {
-    PrintHeader(_console, ::UnitTestCpp::TestFixtureSeparator, ConsoleColor::Green);
+    PrintHeader(*_console, ::UnitTestCpp::TestFixtureSeparator, ConsoleColor::Green);
 
-    _console << " Global test environment tear-down" << endl;
+    *_console << " Global test environment tear-down" << endl;
 
-    PrintHeader(_console, ::UnitTestCpp::TestRunSeparator, ConsoleColor::Green);
+    PrintHeader(*_console, ::UnitTestCpp::TestRunSeparator, ConsoleColor::Green);
 
-    _console << " " << results->GetTotalTestCount() << " "
-             << TestLiteral(results->GetTotalTestCount()) << " ran. ("
-             << milliSecondsElapsed << " ms total)" << endl;
+    *_console << " " << results->GetTotalTestCount() << " "
+              << TestLiteral(results->GetTotalTestCount()) << " ran. ("
+              << milliSecondsElapsed << " ms total)" << endl;
 
-    PrintHeader(_console, ::UnitTestCpp::TestPassSeparator, ConsoleColor::Green);
+    PrintHeader(*_console, ::UnitTestCpp::TestPassSeparator, ConsoleColor::Green);
 
-    _console << " " << results->GetPassedTestCount() << " "
-             << TestLiteral(results->GetPassedTestCount()) << "." << endl;
+    *_console << " " << results->GetPassedTestCount() << " "
+              << TestLiteral(results->GetPassedTestCount()) << "." << endl;
 
     if (results->GetFailureCount() > 0)
     {
-        PrintHeader(_console, ::UnitTestCpp::TestFailSeparator, ConsoleColor::Red);
+        PrintHeader(*_console, ::UnitTestCpp::TestFailSeparator, ConsoleColor::Red);
 
-        _console << " " << results->GetFailedTestCount() << " "
-                 << TestLiteral(results->GetFailedTestCount()) << ", listed below:" << endl;
+        *_console << " " << results->GetFailedTestCount() << " "
+                  << TestLiteral(results->GetFailedTestCount()) << ", listed below:" << endl;
     }
 }
 
@@ -118,13 +124,13 @@ void ConsoleGoogleTestReporter::ReportTestRunOverview(const TestResults * result
         {
             if (testResult.Failed())
             {
-                PrintHeader(_console, ::UnitTestCpp::TestFailSeparator, ConsoleColor::Red);
+                PrintHeader(*_console, ::UnitTestCpp::TestFailSeparator, ConsoleColor::Red);
 
-                _console << " " << TestName(testResult.suiteName, testResult.fixtureName, testResult.testName) << endl;
+                *_console << " " << TestName(testResult.suiteName, testResult.fixtureName, testResult.testName) << endl;
             }
         }
-        _console << endl << results->GetFailedTestCount() << " FAILED "
-                         << ToUpper(TestLiteral(results->GetFailedTestCount())) << endl;
+        *_console << endl << results->GetFailedTestCount() << " FAILED "
+                          << ToUpper(TestLiteral(results->GetFailedTestCount())) << endl;
     }
 }
 
@@ -132,10 +138,10 @@ void ConsoleGoogleTestReporter::ReportTestSuiteStart(const std::string & suiteNa
 {
     if (!::UnitTestCpp::TestSuiteSeparator.empty())
     {
-        PrintHeader(_console, ::UnitTestCpp::TestSuiteSeparator, ConsoleColor::Cyan);
+        PrintHeader(*_console, ::UnitTestCpp::TestSuiteSeparator, ConsoleColor::Cyan);
 
-        _console << " " << TestSuiteName(suiteName) << " (" << numberOfTestFixtures << " "
-                 << TestFixtureLiteral(numberOfTestFixtures) << ")" << endl;
+        *_console << " " << TestSuiteName(suiteName) << " (" << numberOfTestFixtures << " "
+                  << TestFixtureLiteral(numberOfTestFixtures) << ")" << endl;
     }
 }
 
@@ -145,11 +151,11 @@ void ConsoleGoogleTestReporter::ReportTestSuiteFinish(const std::string & suiteN
 {
     if (!::UnitTestCpp::TestSuiteSeparator.empty())
     {
-        PrintHeader(_console, ::UnitTestCpp::TestSuiteSeparator, ConsoleColor::Cyan);
+        PrintHeader(*_console, ::UnitTestCpp::TestSuiteSeparator, ConsoleColor::Cyan);
 
-        _console << " " << numberOfTestFixtures << " " << TestFixtureLiteral(numberOfTestFixtures)
-                 << " from " << TestSuiteName(suiteName)
-                 << " (" << milliSecondsElapsed << " ms total)" << endl;
+        *_console << " " << numberOfTestFixtures << " " << TestFixtureLiteral(numberOfTestFixtures)
+                  << " from " << TestSuiteName(suiteName)
+                  << " (" << milliSecondsElapsed << " ms total)" << endl;
     }
 }
 
@@ -157,10 +163,10 @@ void ConsoleGoogleTestReporter::ReportTestFixtureStart(const std::string & fixtu
 {
     if (!::UnitTestCpp::TestFixtureSeparator.empty())
     {
-        PrintHeader(_console, ::UnitTestCpp::TestFixtureSeparator, ConsoleColor::Yellow);
+        PrintHeader(*_console, ::UnitTestCpp::TestFixtureSeparator, ConsoleColor::Yellow);
 
-        _console << " " << numberOfTests << " " << TestLiteral(numberOfTests)
-                 << " from " << TestFixtureName(fixtureName) << endl;
+        *_console << " " << numberOfTests << " " << TestLiteral(numberOfTests)
+                  << " from " << TestFixtureName(fixtureName) << endl;
     }
 }
 
@@ -170,22 +176,22 @@ void ConsoleGoogleTestReporter::ReportTestFixtureFinish(const std::string & fixt
 {
     if (!::UnitTestCpp::TestFixtureSeparator.empty())
     {
-        PrintHeader(_console, ::UnitTestCpp::TestFixtureSeparator, ConsoleColor::Yellow);
+        PrintHeader(*_console, ::UnitTestCpp::TestFixtureSeparator, ConsoleColor::Yellow);
 
-        _console << " " << numberOfTests << " " << TestLiteral(numberOfTests)
-                 << " from " << TestFixtureName(fixtureName)
-                 << " (" << milliSecondsElapsed << " ms total)" << endl;
+        *_console << " " << numberOfTests << " " << TestLiteral(numberOfTests)
+                  << " from " << TestFixtureName(fixtureName)
+                  << " (" << milliSecondsElapsed << " ms total)" << endl;
     }
-    _console << endl;
+    *_console << endl;
 }
 
 void ConsoleGoogleTestReporter::ReportTestStart(const TestDetails & details)
 {
     if (!::UnitTestCpp::TestStartSeparator.empty())
     {
-        PrintHeader(_console, ::UnitTestCpp::TestStartSeparator, ConsoleColor::Yellow);
+        PrintHeader(*_console, ::UnitTestCpp::TestStartSeparator, ConsoleColor::Yellow);
 
-        _console << " " << TestName(details.suiteName, details.fixtureName, details.testName) << endl;
+        *_console << " " << TestName(details.suiteName, details.fixtureName, details.testName) << endl;
     }
 }
 
@@ -193,20 +199,20 @@ void ConsoleGoogleTestReporter::ReportTestFinish(const TestDetails & details, bo
                                                  int milliSecondsElapsed)
 {
     if (success)
-        PrintHeader(_console, ::UnitTestCpp::TestSuccessSeparator, ConsoleColor::Green);
+        PrintHeader(*_console, ::UnitTestCpp::TestSuccessSeparator, ConsoleColor::Green);
     else
-        PrintHeader(_console, ::UnitTestCpp::TestFailSeparator, ConsoleColor::Red);
+        PrintHeader(*_console, ::UnitTestCpp::TestFailSeparator, ConsoleColor::Red);
 
-    _console << " " << TestName(details.suiteName, details.fixtureName, details.testName)
-             << " (" << milliSecondsElapsed << " ms)" << endl;
+    *_console << " " << TestName(details.suiteName, details.fixtureName, details.testName)
+              << " (" << milliSecondsElapsed << " ms)" << endl;
 }
 
 void ConsoleGoogleTestReporter::ReportTestFailure(TestDetails const& details, const std::string & failure)
 {
     TestDetailedResult detailedResult(details);
     detailedResult.AddFailure(TestDetailedResult::Failure(details.lineNumber, failure));
-    _console << details.fileName << ":" << details.lineNumber << ": Failure" << endl;
-    _console << failure << endl;
+    *_console << details.fileName << ":" << details.lineNumber << ": Failure" << endl;
+    *_console << failure << endl;
     _results.push_back(detailedResult);
 }
 
@@ -216,12 +222,12 @@ void ConsoleGoogleTestReporter::ReportTestSuiteEntry(const std::string & UNUSED(
 
 void ConsoleGoogleTestReporter::ReportTestFixtureEntry(const std::string & fixtureName)
 {
-    _console << TestFixtureName(fixtureName) << "." << endl;
+    *_console << TestFixtureName(fixtureName) << "." << endl;
 }
 
 void ConsoleGoogleTestReporter::ReportTestEntry(const std::string & testName)
 {
-    _console << "  " << testName << endl;
+    *_console << "  " << testName << endl;
 }
 
 } // namespace UnitTestCpp

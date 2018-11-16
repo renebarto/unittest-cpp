@@ -1,22 +1,21 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
-#include <unittest-cpp/Console.h>
 #include <unittest-cpp/exports.h>
 #include <unittest-cpp/ITestReporter.h>
 #include <unittest-cpp/TestDetailedResult.h>
 
 namespace UnitTestCpp {
 
+class Console;
+
 class UNIT_TEST_CPP_EXPORT ConsoleGoogleTestReporter
     : public ITestReporter
 {
 public:
-    ConsoleGoogleTestReporter()
-        : _console(std::cout)
-        , _results()
-    {}
+    ConsoleGoogleTestReporter();
 
 private:
     virtual void ReportTestRunStart(int numberOfTestSuites,
@@ -64,7 +63,7 @@ private:
     }
 
 private:
-    Console _console;
+    std::shared_ptr<Console> _console;
     ResultList _results;
 };
 

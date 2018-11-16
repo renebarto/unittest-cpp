@@ -30,42 +30,44 @@ namespace UnitTestCpp
 {
 
 #if defined(LINUX) || defined(DARWIN)
-enum class ConsoleColor : int
-{
-    Default = -1,
-    Black = 0,
-    Red,
-    Green,
-    Yellow,
-    Blue,
-    Magenta,
-    Cyan,
-    White,
-    ColorMask = 0x07,
-    Intensity = 0x08,
-    Bold = 0x10,
-};
+    enum class ConsoleColor : int
+    {
+        Default = -1,
+        Black = 0,
+        Red,
+        Green,
+        Yellow,
+        Blue,
+        Magenta,
+        Cyan,
+        White,
+        ColorMask = 0x07,
+        Intensity = 0x08,
+        Bold = 0x10,
+    };
 #elif defined(WIN_MSVC) || defined(WIN_MINGW)
-enum class ConsoleColor : int
-{
-    Default = -1,
-    Black = 0,
-    Red = FOREGROUND_RED,
-    Green = FOREGROUND_GREEN,
-    Yellow = FOREGROUND_RED | FOREGROUND_GREEN,
-    Blue = FOREGROUND_BLUE,
-    Magenta = FOREGROUND_RED | FOREGROUND_BLUE,
-    Cyan = FOREGROUND_GREEN | FOREGROUND_BLUE,
-    White = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
-    ColorMask = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
-    Intensity = FOREGROUND_INTENSITY,
-    Bold = 0,
-};
+    enum class ConsoleColor : int
+    {
+        Default = -1,
+        Black = 0,
+        Red = FOREGROUND_RED,
+        Green = FOREGROUND_GREEN,
+        Yellow = FOREGROUND_RED | FOREGROUND_GREEN,
+        Blue = FOREGROUND_BLUE,
+        Magenta = FOREGROUND_RED | FOREGROUND_BLUE,
+        Cyan = FOREGROUND_GREEN | FOREGROUND_BLUE,
+        White = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
+        ColorMask = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
+        Intensity = FOREGROUND_INTENSITY,
+        Bold = 0,
+    };
 #endif
 
-DEFINE_FLAG_OPERATORS(ConsoleColor, int);
-
-std::ostream & operator << (std::ostream & stream, ConsoleColor value);
+template<>
+struct is_flag<ConsoleColor>
+{
+    static constexpr bool value = true;
+};
 
 struct UNIT_TEST_CPP_EXPORT _SetForegroundColor
 {

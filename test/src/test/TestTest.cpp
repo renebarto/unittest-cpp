@@ -229,6 +229,9 @@ TEST(AssertNearStopsAfterFailure)
     ASSERT_EQ(1, results.GetFailureCount());
 }
 
+WARNING_PUSH
+WARNING_DISABLE(4702)
+
 TEST(AssertThrowStopsAfterFailure)
 {
     class FailingTest : public Test
@@ -274,6 +277,8 @@ TEST(AssertNoThrowStopsAfterFailure)
 
     ASSERT_EQ(1, results.GetFailureCount());
 }
+
+WARNING_POP
 
 TEST(ThrowingTestsAreReportedAsFailures)
 {

@@ -1,23 +1,22 @@
 #pragma once
 
+#include <memory>
 #include <string>
-#include <unittest-cpp/Console.h>
 #include <unittest-cpp/exports.h>
 #include <unittest-cpp/StreamTestReporter.h>
 
 namespace UnitTestCpp
 {
 
+class Console;
+
 class UNIT_TEST_CPP_EXPORT ConsoleTestReporter : public StreamTestReporter
 {
 public:
-    ConsoleTestReporter()
-        : StreamTestReporter(std::cout)
-        , console()
-    { }
+    ConsoleTestReporter();
 
 private:
-    Console console;
+    std::shared_ptr<Console> _console;
 
     virtual void ReportTestRunStart(int numberOfTestSuites,
                                     int numberOfTestFixtures,

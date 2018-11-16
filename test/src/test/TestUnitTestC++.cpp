@@ -73,6 +73,9 @@ TEST(CheckAssertSucceeds)
     EXPECT_ASSERT(UnitTestCpp::ReportAssert("desc", "file", 0));
 }
 
+WARNING_PUSH
+WARNING_DISABLE(4702)
+
 TEST(CheckThrowMacroFailsOnMissingException)
 {
     class NoThrowTest : public UnitTestCpp::Test
@@ -99,6 +102,8 @@ TEST(CheckThrowMacroFailsOnMissingException)
 
     EXPECT_EQ(1, results.GetFailureCount());
 }
+
+WARNING_POP
 
 TEST(CheckThrowMacroFailsOnWrongException)
 {

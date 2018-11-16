@@ -1,6 +1,7 @@
 #include <unittest-cpp/ConsoleTestReporter.h>
 
 #include <iomanip>
+#include <unittest-cpp/Console.h>
 #include <unittest-cpp/TestDetails.h>
 #include <unittest-cpp/TestResults.h>
 
@@ -9,20 +10,25 @@ using namespace std;
 namespace UnitTestCpp
 {
 
+    ConsoleTestReporter::ConsoleTestReporter()
+    : StreamTestReporter(std::cout)
+    , _console(std::make_shared<Console>())
+{ }
+
 void ConsoleTestReporter::ReportTestRunStart(int numberOfTestSuites,
                                              int numberOfTestFixtures,
                                              int numberOfTests)
 {
-    if (console.ShouldUseColor())
-        console.SetTerminalColor(ConsoleColor::Green);
+    if (_console->ShouldUseColor())
+        _console->SetTerminalColor(ConsoleColor::Green);
 
     _stream << TestRunSeparator;
 
-    if (console.ShouldUseColor())
-        console.ResetTerminalColor();
+    if (_console->ShouldUseColor())
+        _console->ResetTerminalColor();
 
     _stream << " " << TestRunStartMessage(numberOfTestSuites, numberOfTestFixtures,
-                                         numberOfTests) << endl;
+                                          numberOfTests) << endl;
 }
 
 void ConsoleTestReporter::ReportTestRunFinish(int numberOfTestSuites,
@@ -30,13 +36,13 @@ void ConsoleTestReporter::ReportTestRunFinish(int numberOfTestSuites,
                                               int numberOfTests,
                                               int milliSecondsElapsed)
 {
-    if (console.ShouldUseColor())
-        console.SetTerminalColor(ConsoleColor::Green);
+    if (_console->ShouldUseColor())
+        _console->SetTerminalColor(ConsoleColor::Green);
 
     _stream << TestRunSeparator;
 
-    if (console.ShouldUseColor())
-        console.ResetTerminalColor();
+    if (_console->ShouldUseColor())
+        _console->ResetTerminalColor();
 
     _stream << " " << TestRunFinishMessage(numberOfTestSuites, numberOfTestFixtures, numberOfTests,
                                           milliSecondsElapsed) << endl;
@@ -44,18 +50,18 @@ void ConsoleTestReporter::ReportTestRunFinish(int numberOfTestSuites,
 
 void ConsoleTestReporter::ReportTestRunSummary(const TestResults * results, int milliSecondsElapsed)
 {
-    if (console.ShouldUseColor())
+    if (_console->ShouldUseColor())
     {
         if (results->GetFailureCount() > 0)
-            console.SetTerminalColor(ConsoleColor::Red);
+            _console->SetTerminalColor(ConsoleColor::Red);
         else
-            console.SetTerminalColor(ConsoleColor::Green);
+            _console->SetTerminalColor(ConsoleColor::Green);
     }
 
     _stream << TestRunSummaryMessage(results, milliSecondsElapsed) << endl;
 
-    if (console.ShouldUseColor())
-        console.ResetTerminalColor();
+    if (_console->ShouldUseColor())
+        _console->ResetTerminalColor();
 }
 
 void ConsoleTestReporter::ReportTestRunOverview(const TestResults * results)
@@ -65,13 +71,13 @@ void ConsoleTestReporter::ReportTestRunOverview(const TestResults * results)
 
 void ConsoleTestReporter::ReportTestSuiteStart(const std::string & suiteName, int numberOfTestFixtures)
 {
-    if (console.ShouldUseColor())
-        console.SetTerminalColor(ConsoleColor::Cyan);
+    if (_console->ShouldUseColor())
+        _console->SetTerminalColor(ConsoleColor::Cyan);
 
     _stream << TestSuiteSeparator;
 
-    if (console.ShouldUseColor())
-        console.ResetTerminalColor();
+    if (_console->ShouldUseColor())
+        _console->ResetTerminalColor();
 
     _stream << " " << TestSuiteStartMessage(suiteName, numberOfTestFixtures) << endl;
 }
@@ -80,13 +86,13 @@ void ConsoleTestReporter::ReportTestSuiteFinish(const std::string & suiteName,
                                                 int numberOfTestFixtures,
                                                 int milliSecondsElapsed)
 {
-    if (console.ShouldUseColor())
-        console.SetTerminalColor(ConsoleColor::Cyan);
+    if (_console->ShouldUseColor())
+        _console->SetTerminalColor(ConsoleColor::Cyan);
 
     _stream << TestSuiteSeparator;
 
-    if (console.ShouldUseColor())
-        console.ResetTerminalColor();
+    if (_console->ShouldUseColor())
+        _console->ResetTerminalColor();
 
     _stream << " " << TestSuiteFinishMessage(suiteName, numberOfTestFixtures,
                                             milliSecondsElapsed) << endl;
@@ -94,13 +100,13 @@ void ConsoleTestReporter::ReportTestSuiteFinish(const std::string & suiteName,
 
 void ConsoleTestReporter::ReportTestFixtureStart(const std::string & fixtureName, int numberOfTests)
 {
-    if (console.ShouldUseColor())
-        console.SetTerminalColor(ConsoleColor::Yellow);
+    if (_console->ShouldUseColor())
+        _console->SetTerminalColor(ConsoleColor::Yellow);
 
     _stream << TestFixtureSeparator;
 
-    if (console.ShouldUseColor())
-        console.ResetTerminalColor();
+    if (_console->ShouldUseColor())
+        _console->ResetTerminalColor();
 
     _stream << " " << TestFixtureStartMessage(fixtureName, numberOfTests) << endl;
 }
@@ -109,13 +115,13 @@ void ConsoleTestReporter::ReportTestFixtureFinish(const std::string & fixtureNam
                                                   int numberOfTests,
                                                   int milliSecondsElapsed)
 {
-    if (console.ShouldUseColor())
-        console.SetTerminalColor(ConsoleColor::Yellow);
+    if (_console->ShouldUseColor())
+        _console->SetTerminalColor(ConsoleColor::Yellow);
 
     _stream << TestFixtureSeparator;
 
-    if (console.ShouldUseColor())
-        console.ResetTerminalColor();
+    if (_console->ShouldUseColor())
+        _console->ResetTerminalColor();
 
     _stream << " " << TestFixtureFinishMessage(fixtureName, numberOfTests, milliSecondsElapsed);
 }
@@ -129,9 +135,9 @@ void ConsoleTestReporter::ReportTestFinish(const TestDetails & details, bool suc
                                            int milliSecondsElapsed)
 {
     DeferredTestReporter::ReportTestFinish(details, success, milliSecondsElapsed);
-    if (console.ShouldUseColor())
+    if (_console->ShouldUseColor())
     {
-        console.SetTerminalColor(success ? ConsoleColor::Green : ConsoleColor::Red);
+        _console->SetTerminalColor(success ? ConsoleColor::Green : ConsoleColor::Red);
     }
 
     if (success)
@@ -139,8 +145,8 @@ void ConsoleTestReporter::ReportTestFinish(const TestDetails & details, bool suc
     else
         _stream << TestFailSeparator;
 
-    if (console.ShouldUseColor())
-        console.ResetTerminalColor();
+    if (_console->ShouldUseColor())
+        _console->ResetTerminalColor();
 
     _stream << " " << TestFinishMessage(details, success, milliSecondsElapsed) << endl;
 }
