@@ -24,9 +24,9 @@ public:
     int CountSuites();
     int CountFixtures();
     int CountTests();
-    template <typename Predicate> int CountSuitesIf(Predicate predicate);
-    template <typename Predicate> int CountFixturesIf(Predicate predicate);
-    template <typename Predicate> int CountTestsIf(Predicate predicate);
+    template <typename Predicate> int CountSuitesIf(const Predicate & predicate);
+    template <typename Predicate> int CountFixturesIf(const Predicate & predicate);
+    template <typename Predicate> int CountTestsIf(const Predicate & predicate);
 
 private:
     TestSuiteInfo * head;
@@ -41,7 +41,8 @@ public:
     TestRegistrar(TestRegistry & registry, Test * test);
 };
 
-template <typename Predicate> int TestRegistry::CountSuitesIf(Predicate predicate)
+template <typename Predicate>
+int TestRegistry::CountSuitesIf(const Predicate & predicate)
 {
     int numberOfTestSuites = 0;
     TestSuiteInfo * testSuite = GetHead();
@@ -54,7 +55,8 @@ template <typename Predicate> int TestRegistry::CountSuitesIf(Predicate predicat
     return numberOfTestSuites;
 }
 
-template <typename Predicate> int TestRegistry::CountFixturesIf(Predicate predicate)
+template <typename Predicate>
+int TestRegistry::CountFixturesIf(const Predicate & predicate)
 {
     int numberOfTestFixtures = 0;
     TestSuiteInfo * testSuite = GetHead();
@@ -67,7 +69,8 @@ template <typename Predicate> int TestRegistry::CountFixturesIf(Predicate predic
     return numberOfTestFixtures;
 }
 
-template <typename Predicate> int TestRegistry::CountTestsIf(Predicate predicate)
+template <typename Predicate>
+int TestRegistry::CountTestsIf(const Predicate & predicate)
 {
     int numberOfTests = 0;
     TestSuiteInfo * testSuite = GetHead();

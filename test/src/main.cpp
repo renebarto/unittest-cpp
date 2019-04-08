@@ -9,9 +9,25 @@ static const std::string moduleName = "unittest-cpp";
 
 int Usage(UnitTestCpp::Console & console)
 {
-    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "TODO: explain command line" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "Usage: " << moduleName << ".test.exe [options]" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "Options:" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --xml <path>                      " << "Output to XML file" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_emulation                 " << "Output in Google Test emulation mode (Google Test emulation)" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --filter <filter expression> or   " << "Output in Google Test emulation mode" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_filter <filter expression>" << "Filter tests (* for all, <suite>.* for all in suite, *<string>* for all containing string etc. (Google Test emulation)" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --color [1|Y|YES|ON] or           " << "Filter tests (* for all, <suite>.* for all in suite, *<string>* for all containing string etc." << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_color [1|Y|YES|ON]        " << "Output in color if one of the options is used otherwise no color (default = color output)" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --list or --gtest_list_tests      " << "Only list tests according to filter, then exit" << endl;
     console << fgcolor(UnitTestCpp::ConsoleColor::Default);
     return EXIT_FAILURE;
+}
+
+bool GetBoolean(const std::string & option)
+{
+    return UnitTestCpp::IsEqualIgnoreCase(option, "1") ||
+           UnitTestCpp::IsEqualIgnoreCase(option, "ON") ||
+           UnitTestCpp::IsEqualIgnoreCase(option, "Y") ||
+           UnitTestCpp::IsEqualIgnoreCase(option, "YES");
 }
 
 int main(int argc, const char * argv[])
@@ -22,13 +38,19 @@ int main(int argc, const char * argv[])
     console << "Running tests for: " << moduleName << std::endl;
     console << fgcolor(UnitTestCpp::ConsoleColor::Default);
     std::string applicationName = argv[0];
+    std::string testFilter;
+    bool useColor = true;
     std::string xmlOutput;
     bool gtestEmulation{};
-    bool gtestList{};
+    bool listTests{};
     const std::string optionXML = "--xml";
-    const std::string optionGtestFilter = "--gtest_filter=";
-    const std::string optionGtestColor = "--gtest_color=";
-    const std::string optionGtestList = "--gtest_list_tests";
+    const std::string optionGTestEmulation = "--gtest_emulation";
+    const std::string optionGTestFilter = "--gtest_filter=";
+    const std::string optionFilter = "--filter=";
+    const std::string optionGTestColor = "--gtest_color=";
+    const std::string optionColor = "--color=";
+    const std::string optionGTestList = "--gtest_list_tests";
+    const std::string optionList = "--list";
     console << fgcolor(UnitTestCpp::ConsoleColor::Yellow) << "Command line arguments:" << endl;
     if (argc > 1)
     {
@@ -38,13 +60,37 @@ int main(int argc, const char * argv[])
         {
             for (int i = 1; i < argc; ++i)
             {
-                if (UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestFilter.length()), optionGtestFilter) ||
-                    UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestColor.length()), optionGtestColor))
-                    gtestEmulation = true;
-                else if (UnitTestCpp::IsEqualIgnoreCase(string(argv[i]).substr(0, optionGtestList.length()), optionGtestList))
+                std::string argument(argv[i]);
+                if (UnitTestCpp::IsEqualIgnoreCase(argument.substr(0, optionGTestEmulation.length()), optionGTestEmulation))
                 {
                     gtestEmulation = true;
-                    gtestList = true;
+                }
+                else if (UnitTestCpp::IsEqualIgnoreCase(argument.substr(0, optionGTestFilter.length()), optionGTestFilter))
+                {
+                    testFilter = argument.substr(optionGTestFilter.length());
+                    gtestEmulation = true;
+                }
+                else if (UnitTestCpp::IsEqualIgnoreCase(argument.substr(0, optionFilter.length()), optionFilter))
+                {
+                    testFilter = argument.substr(optionFilter.length());
+                }
+                else if (UnitTestCpp::IsEqualIgnoreCase(argument.substr(0, optionGTestColor.length()), optionGTestColor))
+                {
+                    useColor = GetBoolean(argument.substr(optionGTestColor.length()));
+                    gtestEmulation = true;
+                }
+                else if (UnitTestCpp::IsEqualIgnoreCase(argument.substr(0, optionColor.length()), optionColor))
+                {
+                    useColor = GetBoolean(argument.substr(optionColor.length()));
+                }
+                else if (UnitTestCpp::IsEqualIgnoreCase(argument.substr(0, optionGTestList.length()), optionGTestList))
+                {
+                    gtestEmulation = true;
+                    listTests = true;
+                }
+                else if (UnitTestCpp::IsEqualIgnoreCase(argument.substr(0, optionList.length()), optionList))
+                {
+                    listTests = true;
                 }
                 else
                     return Usage(console);
@@ -58,30 +104,40 @@ int main(int argc, const char * argv[])
 
     int result = 0;
 
+    UnitTestCpp::True NonFilteringSelector;
+    UnitTestCpp::InSelectionFilter FilteringSelector(testFilter);
+    UnitTestCpp::Selector * filter = &NonFilteringSelector;
+    if (!testFilter.empty())
+        filter = &FilteringSelector;
+
+    if (!filter->IsValid())
+    {
+        console << "Invalid filter specified, defaulting to non-filtered";
+        filter = &NonFilteringSelector;
+    }
     if (!xmlOutput.empty())
     {
         std::ofstream outputFile;
 
         outputFile.open(xmlOutput);
         UnitTestCpp::XMLTestReporter reporter(outputFile);
-        result = RunAllTests(reporter);
-    } else if (gtestEmulation)
-    {
-        if (gtestList)
-        {
-            UnitTestCpp::ConsoleGoogleTestReporter reporter;
-            ListAllTests(reporter);
-        }
-        else
-        {
-            UnitTestCpp::ConsoleGoogleTestReporter reporter;
-            result = RunAllTests(reporter);
-        }
+        result = RunSelectedTests(reporter, *filter);
     } else
     {
-        UnitTestCpp::ConsoleTestReporter reporter;
-        result = RunAllTests(reporter);
+        UnitTestCpp::ConsoleTestReporter reporterStandard(useColor);
+        UnitTestCpp::ConsoleGoogleTestReporter reporterGTest(useColor);
+        UnitTestCpp::ITestReporter *reporter = &reporterStandard;
+        if (gtestEmulation)
+        {
+            reporter = &reporterGTest;
+        }
+        if (listTests)
+        {
+            ListSelectedTests(*reporter, *filter);
+        } else
+        {
+            result = RunSelectedTests(*reporter, *filter);
+        }
     }
-
     return result;
 }

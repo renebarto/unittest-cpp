@@ -15,7 +15,7 @@ class UNIT_TEST_CPP_EXPORT ConsoleGoogleTestReporter
     : public ITestReporter
 {
 public:
-    ConsoleGoogleTestReporter();
+    ConsoleGoogleTestReporter(bool useColor);
 
 private:
     virtual void ReportTestRunStart(int numberOfTestSuites,

@@ -55,7 +55,7 @@ UNIT_TEST_CPP_EXPORT int RunAllTests(ITestReporter & reporter);
 template<class Predicate>
 int RunSelectedTests(const Predicate & predicate)
 {
-    ConsoleTestReporter reporter;
+    ConsoleTestReporter reporter(true);
     return RunSelectedTests(reporter, predicate);
 }
 
@@ -72,7 +72,7 @@ UNIT_TEST_CPP_EXPORT void ListAllTests(ITestReporter & reporter);
 template<class Predicate>
 void ListSelectedTests(const Predicate & predicate)
 {
-    ConsoleTestReporter reporter;
+    ConsoleTestReporter reporter(true);
     ListSelectedTests(reporter, predicate);
 }
 

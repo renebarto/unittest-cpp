@@ -31,8 +31,8 @@ public:
 
     int CountFixtures();
     int CountTests();
-    template <typename Predicate> int CountFixturesIf(Predicate predicate);
-    template <typename Predicate> int CountTestsIf(Predicate predicate);
+    template <typename Predicate> int CountFixturesIf(const Predicate & predicate);
+    template <typename Predicate> int CountTestsIf(const Predicate & predicate);
 
 private:
     TestFixtureInfo * head;
@@ -43,8 +43,8 @@ private:
 };
 
 template <class Predicate> void TestSuiteInfo::RunIf(const Predicate & predicate,
-                                                     int const maxTestTimeInMs,
-                                                     TestResults * testResults)
+                                      int const maxTestTimeInMs,
+                                      TestResults * testResults)
 {
     Timer testTimer;
     testTimer.Start();
@@ -63,7 +63,7 @@ template <class Predicate> void TestSuiteInfo::RunIf(const Predicate & predicate
 }
 
 template <class Predicate> void TestSuiteInfo::ListIf(const Predicate & predicate,
-                                                      TestResults * testResults)
+                                       TestResults * testResults)
 {
     testResults->OnTestSuiteList(this);
 
@@ -76,7 +76,7 @@ template <class Predicate> void TestSuiteInfo::ListIf(const Predicate & predicat
     }
 }
 
-template <typename Predicate> int TestSuiteInfo::CountFixturesIf(Predicate predicate)
+template <typename Predicate> int TestSuiteInfo::CountFixturesIf(const Predicate & predicate)
 {
     int numberOfTestFixtures = 0;
     TestFixtureInfo * testFixture = GetHead();
@@ -89,7 +89,7 @@ template <typename Predicate> int TestSuiteInfo::CountFixturesIf(Predicate predi
     return numberOfTestFixtures;
 }
 
-template <typename Predicate> int TestSuiteInfo::CountTestsIf(Predicate predicate)
+template <typename Predicate> int TestSuiteInfo::CountTestsIf(const Predicate & predicate)
 {
     int numberOfTests = 0;
     TestFixtureInfo * testFixture = GetHead();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <regex>
 #include <unittest-cpp/exports.h>
 #include <unittest-cpp/ITestReporter.h>
 #include <unittest-cpp/TestRegistry.h>
@@ -13,14 +14,23 @@ class TestFixtureInfo;
 class TestResults;
 class TestSuiteInfo;
 
-struct True
+struct Selector
 {
-    bool operator () (const TestInfo * const ) const { return true; }
-    bool operator () (const TestFixtureInfo * const ) const { return true; }
-    bool operator () (const TestSuiteInfo * const ) const { return true; }
+    virtual bool operator () (const TestInfo * const ) const = 0;
+    virtual bool operator () (const TestFixtureInfo * const ) const = 0;
+    virtual bool operator () (const TestSuiteInfo * const ) const = 0;
+    virtual bool IsValid() const = 0;
 };
 
-struct UNIT_TEST_CPP_EXPORT InSelection
+struct True : public Selector
+{
+    bool operator () (const TestInfo * const ) const override { return true; }
+    bool operator () (const TestFixtureInfo * const ) const override { return true; }
+    bool operator () (const TestSuiteInfo * const ) const override { return true; }
+    virtual bool IsValid() const override { return true; }
+};
+
+struct UNIT_TEST_CPP_EXPORT InSelection : public Selector
 {
     InSelection(const char * suiteName, const char * fixtureName, const char * testName)
         : suiteName(suiteName)
@@ -28,14 +38,30 @@ struct UNIT_TEST_CPP_EXPORT InSelection
         , testName(testName)
     {
     }
-    bool operator () (const TestInfo * const test) const;
-    bool operator () (const TestFixtureInfo * const fixture) const;
-    bool operator () (const TestSuiteInfo * const suite) const;
+    bool operator () (const TestInfo * const test) const override;
+    bool operator () (const TestFixtureInfo * const fixture) const override;
+    bool operator () (const TestSuiteInfo * const suite) const override;
+    virtual bool IsValid() const override { return true; }
 
 private:
     const char * suiteName;
     const char * fixtureName;
     const char * testName;
+};
+
+struct UNIT_TEST_CPP_EXPORT InSelectionFilter : public Selector
+{
+    InSelectionFilter(const std::string & filter);
+    bool operator () (const TestInfo * const test) const override;
+    bool operator () (const TestFixtureInfo * const fixture) const override;
+    bool operator () (const TestSuiteInfo * const suite) const override;
+    virtual bool IsValid() const override;
+
+private:
+    std::regex matcherSuite;
+    std::regex matcherFixture;
+    std::regex matcherTest;
+    bool isValid;
 };
 
 class UNIT_TEST_CPP_EXPORT TestRunner
@@ -86,7 +112,7 @@ int TestRunner::RunTestsIf(const TestRegistry & registry,
 
 template <class Predicate>
 void TestRunner::ListTestsIf(const TestRegistry & registry,
-                            const Predicate & predicate)
+                             const Predicate & predicate)
 {
     TestSuiteInfo * curTestSuite = registry.GetHead();
 
