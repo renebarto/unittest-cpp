@@ -63,10 +63,12 @@ void PrintHeader(Console & console, const std::string & header, ConsoleColor col
         console.ResetTerminalColor();
 }
 
-ConsoleGoogleTestReporter::ConsoleGoogleTestReporter()
+ConsoleGoogleTestReporter::ConsoleGoogleTestReporter(bool useColor)
     : _console(std::make_shared<Console>(std::cout))
     , _results()
-{}
+{
+    _console->ShouldUseColor(useColor);
+}
 
 void ConsoleGoogleTestReporter::ReportTestRunStart(int UNUSED(numberOfTestSuites),
                                                    int numberOfTestFixtures,

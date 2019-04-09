@@ -10,10 +10,12 @@ using namespace std;
 namespace UnitTestCpp
 {
 
-    ConsoleTestReporter::ConsoleTestReporter()
+ConsoleTestReporter::ConsoleTestReporter(bool useColor)
     : StreamTestReporter(std::cout)
     , _console(std::make_shared<Console>())
-{ }
+{
+    _console->ShouldUseColor(useColor);
+}
 
 void ConsoleTestReporter::ReportTestRunStart(int numberOfTestSuites,
                                              int numberOfTestFixtures,

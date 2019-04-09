@@ -102,6 +102,7 @@ public:
                           ConsoleColor backgroundColor = ConsoleColor::Default);
     void ResetTerminalColor();
     bool ShouldUseColor();
+    void ShouldUseColor(bool useColor);
 
     // Streams a non-pointer _value to this object.
     template <typename T>
@@ -128,6 +129,7 @@ protected:
     int _handle;
     ConsoleColor _currentForegroundColor;
     ConsoleColor _currentBackgroundColor;
+    bool _useColor;
 #if defined(WIN_MSVC) || defined(WIN_MINGW)
     WORD _defaultColorAttributes;
 #endif
@@ -376,6 +378,7 @@ inline Console::Console(int handle)
     , _handle(handle)
     , _currentForegroundColor(ConsoleColor::Default)
     , _currentBackgroundColor(ConsoleColor::Default)
+    , _useColor(true)
 {
 }
 
@@ -384,6 +387,7 @@ inline Console::Console(std::ostream & stream)
     , _handle(DetermineHandle(&stream))
     , _currentForegroundColor(ConsoleColor::Default)
     , _currentBackgroundColor(ConsoleColor::Default)
+    , _useColor(true)
 {
 }
 
@@ -421,9 +425,7 @@ inline void Console::SetTerminalColor(ConsoleColor foregroundColor, ConsoleColor
 
 inline bool Console::ShouldUseColor()
 {
-    if (_handle == InvalidHandle)
-        return false;
-    if (!isatty(_handle))
+    if (!_useColor || (_handle == InvalidHandle) || !isatty(_handle))
         return false;
 
     const char * termSetting = getenv("TERM");
@@ -440,6 +442,12 @@ inline bool Console::ShouldUseColor()
     (term == "cygwin");
     return term_supports_color;
 }
+
+inline void Console::ShouldUseColor(bool useColor)
+{
+    _useColor = useColor;
+}
+
 #elif defined(DARWIN)
 inline std::ostream * DetermineStream(int handle)
 {
@@ -497,6 +505,7 @@ inline Console::Console(int handle)
     , _handle(handle)
     , _currentForegroundColor(ConsoleColor::Default)
     , _currentBackgroundColor(ConsoleColor::Default)
+    , _useColor(true)
 {
 }
 
@@ -505,6 +514,7 @@ inline Console::Console(std::ostream & stream)
     , _handle(DetermineHandle(&stream))
     , _currentForegroundColor(ConsoleColor::Default)
     , _currentBackgroundColor(ConsoleColor::Default)
+    , _useColor(true)
 {
 }
 
@@ -542,9 +552,7 @@ inline void Console::SetTerminalColor(ConsoleColor foregroundColor, ConsoleColor
 
 inline bool Console::ShouldUseColor()
 {
-    if (_handle == InvalidHandle)
-        return false;
-    if (!OSAL::Files::isatty(_handle))
+    if (!_useColor || (_handle == InvalidHandle) || !OSAL::Files::isatty(_handle))
         return false;
 
     const char * termSetting = OSAL::System::getenv("TERM");
@@ -560,6 +568,11 @@ inline bool Console::ShouldUseColor()
         (term == "linux") ||
         (term == "cygwin");
     return term_supports_color;
+}
+
+inline void Console::ShouldUseColor(bool useColor)
+{
+    _useColor = useColor;
 }
 #elif defined(LINUX)
 
@@ -619,6 +632,7 @@ inline Console::Console(int handle)
     , _handle(handle)
     , _currentForegroundColor(ConsoleColor::Default)
     , _currentBackgroundColor(ConsoleColor::Default)
+    , _useColor(true)
 {
 }
 
@@ -627,6 +641,7 @@ inline Console::Console(std::ostream & stream)
     , _handle(DetermineHandle(&stream))
     , _currentForegroundColor(ConsoleColor::Default)
     , _currentBackgroundColor(ConsoleColor::Default)
+    , _useColor(true)
 {
 }
 
@@ -664,9 +679,7 @@ inline void Console::SetTerminalColor(ConsoleColor foregroundColor, ConsoleColor
 
 inline bool Console::ShouldUseColor()
 {
-    if (_handle == InvalidHandle)
-        return false;
-    if (!isatty(_handle))
+    if (!_useColor || (_handle == InvalidHandle) || !isatty(_handle))
         return false;
 
     const char * termSetting = getenv("TERM");
@@ -684,6 +697,10 @@ inline bool Console::ShouldUseColor()
     return term_supports_color;
 }
 
+inline void Console::ShouldUseColor(bool useColor)
+{
+    _useColor = useColor;
+}
 #endif
 
 } // namespace UnitTestCpp

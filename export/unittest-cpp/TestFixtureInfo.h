@@ -30,7 +30,7 @@ public:
     template <class Predicate> void ListIf(const Predicate & predicate, TestResults * testResults);
 
     int CountTests();
-    template <typename Predicate> int CountTestsIf(Predicate predicate);
+    template <typename Predicate> int CountTestsIf(const Predicate & predicate);
 
 private:
     Test * head;
@@ -58,6 +58,9 @@ template <class Predicate> void TestFixtureInfo::RunIf(const Predicate & predica
 
 template <class Predicate> void TestFixtureInfo::ListIf(const Predicate & predicate, TestResults * testResults)
 {
+    if (CountTestsIf(predicate) <= 0)
+        return;
+
     testResults->OnTestFixtureList(this);
 
     Test * test = this->GetHead();
@@ -69,7 +72,7 @@ template <class Predicate> void TestFixtureInfo::ListIf(const Predicate & predic
     }
 }
 
-template <typename Predicate> int TestFixtureInfo::CountTestsIf(Predicate predicate)
+template <typename Predicate> int TestFixtureInfo::CountTestsIf(const Predicate & predicate)
 {
     int numberOfTests = 0;
     Test * test = this->GetHead();

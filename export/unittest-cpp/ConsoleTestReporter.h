@@ -13,7 +13,7 @@ class Console;
 class UNIT_TEST_CPP_EXPORT ConsoleTestReporter : public StreamTestReporter
 {
 public:
-    ConsoleTestReporter();
+    ConsoleTestReporter(bool useColor);
 
 private:
     std::shared_ptr<Console> _console;
