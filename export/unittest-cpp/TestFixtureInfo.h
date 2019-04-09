@@ -58,6 +58,9 @@ template <class Predicate> void TestFixtureInfo::RunIf(const Predicate & predica
 
 template <class Predicate> void TestFixtureInfo::ListIf(const Predicate & predicate, TestResults * testResults)
 {
+    if (CountTestsIf(predicate) <= 0)
+        return;
+
     testResults->OnTestFixtureList(this);
 
     Test * test = this->GetHead();
