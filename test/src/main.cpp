@@ -11,13 +11,28 @@ int Usage(UnitTestCpp::Console & console)
 {
     console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "Usage: " << moduleName << ".test.exe [options]" << endl;
     console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "Options:" << endl;
-    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --xml <path>                      " << "Output to XML file" << endl;
-    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_emulation                 " << "Output in Google Test emulation mode (Google Test emulation)" << endl;
-    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --filter <filter expression> or   " << "Output in Google Test emulation mode" << endl;
-    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_filter <filter expression>" << "Filter tests (* for all, <suite>.* for all in suite, *<string>* for all containing string etc. (Google Test emulation)" << endl;
-    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --color [1|Y|YES|ON] or           " << "Filter tests (* for all, <suite>.* for all in suite, *<string>* for all containing string etc." << endl;
-    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_color [1|Y|YES|ON]        " << "Output in color if one of the options is used otherwise no color (default = color output)" << endl;
-    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --list or --gtest_list_tests      " << "Only list tests according to filter, then exit" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --xml <path>                 " << "Output to XML file" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_emulation            " << "Output in Google Test emulation mode (Google Test emulation)" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --filter <pattern> or        " << "Output in Google Test emulation mode" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_filter <pattern>     " << "Filter tests (* for all, <suite>.* for all in suite, *<string>* for all containing string etc. (Google Test emulation)" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --color [1|Y|YES|ON] or      " << "Filter tests (* for all, <suite>.* for all in suite, *<string>* for all containing string etc." << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --gtest_color [1|Y|YES|ON]   " << "Output in color if one of the options is used otherwise no color (default = color output)" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "  --list or --gtest_list_tests " << "Only list tests according to filter, then exit" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "Pattern can be:                " << "Treated as:" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "suite.fixture.test             " << "suite.fixture.test" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "fixture.test                   " << "*.fixture.test" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "suite.fixture.*                " << "suite.fixture.*" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "suite.*                        " << "suite.*.*" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "*.fixture.test                 " << "*.fixture.test" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "*.test                         " << "*.*.test" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "*                              " << "*.*.*" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "*test                          " << "*.*.*test" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "*fixture.test                  " << "*.*fixture.test" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "*suite.fixture.test            " << "*suite.fixture.test" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "suite*                         " << "suite*.*.*" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "suite.fixture*                 " << "suite.fixture*.*" << endl;
+    console << fgcolor(UnitTestCpp::ConsoleColor::Green) << "suite.fixture.test*            " << "suite.fixture.test*" << endl;
     console << fgcolor(UnitTestCpp::ConsoleColor::Default);
     return EXIT_FAILURE;
 }
