@@ -47,7 +47,7 @@ TEST (ExceptionsInFixtureAreReportedAsHappeningInTheFixture)
     TestResults result(&reporter);
     {
         ScopedCurrentTest scopedResults(result);
-        list2.GetHead()->RunIf(True(), 0, &result);
+        RunIf(*list2.GetHead(), True(), 0, &result);
     }
 
     EXPECT_TRUE(reporter.lastFailedMessage.find("Unhandled exception") != string::npos);
@@ -133,7 +133,7 @@ TEST(FixturesWithThrowingCtorsAreFailures)
     TestResults result(&reporter);
     {
         ScopedCurrentTest scopedResult(result);
-        throwingFixtureTestRegistry1.GetHead()->RunIf(True(), 0, &result);
+        RunIf(*throwingFixtureTestRegistry1.GetHead(), True(), 0, &result);
     }
 
     int const failureCount = result.GetFailedTestCount();
@@ -196,7 +196,7 @@ TEST(CorrectlyReportsFixturesWithCtorsThatAssert)
     TestResults result(&reporter);
     {
         ScopedCurrentTest scopedResults(result);
-        ctorAssertFixtureTestRegistry.GetHead()->RunIf(True(), 0, &result);
+        RunIf(*ctorAssertFixtureTestRegistry.GetHead(), True(), 0, &result);
     }
 
     const int failureCount = result.GetFailedTestCount();

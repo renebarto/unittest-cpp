@@ -314,6 +314,12 @@ inline bool Console::ShouldUseColor()
     (term == "cygwin");
     return term_supports_color;
 }
+
+inline void Console::ShouldUseColor(bool useColor)
+{
+    _useColor = useColor;
+}
+
 #elif defined(WIN_MINGW)
 inline std::ostream * DetermineStream(int handle)
 {

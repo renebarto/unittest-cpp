@@ -88,28 +88,4 @@ const std::string & TestSuiteInfo::Name() const
     return suiteName;
 }
 
-int TestSuiteInfo::CountFixtures()
-{
-    int numberOfTestFixtures = 0;
-    TestFixtureInfo * testFixture = GetHead();
-    while (testFixture)
-    {
-        ++numberOfTestFixtures;
-        testFixture = testFixture->next;
-    }
-    return numberOfTestFixtures;
-}
-
-int TestSuiteInfo::CountTests()
-{
-    int numberOfTests = 0;
-    TestFixtureInfo * testFixture = GetHead();
-    while (testFixture)
-    {
-        numberOfTests += testFixture->CountTests();
-        testFixture = testFixture->next;
-    }
-    return numberOfTests;
-}
-
 } // namespace UnitTestCpp

@@ -10,17 +10,7 @@ namespace UnitTestCpp
 
 bool InSelection::operator () (const TestInfo * const test) const
 {
-    return !testName || (test->_details.testName == testName);
-}
-
-bool InSelection::operator () (const TestFixtureInfo * const fixture) const
-{
-    return !fixtureName || (fixture->Name() == fixtureName);
-}
-
-bool InSelection::operator () (const TestSuiteInfo * const suite) const
-{
-    return !suiteName || (suite->Name() == suiteName);
+    return fullName.empty() || (test->_details.suiteName + "." + test->_details.fixtureName + "." + test->_details.testName == fullName);
 }
 
 static void FindAndReplaceAll(std::string & str, std::string searchStr, std::string replaceStr)
@@ -38,123 +28,176 @@ static void FindAndReplaceAll(std::string & str, std::string searchStr, std::str
     }
 }
 
-InSelectionFilter::InSelectionFilter(const string & filter)
-    : matcherSuite()
-    , matcherFixture()
-    , matcherTest()
-    , isValid()
+template<char delimiter>
+class WordDelimitedBy : public std::string
 {
-    string filterSuite;
-    string filterFixture;
-    string filterTest;
-    auto posFirstDot = filter.find('.');
-    if (posFirstDot != string::npos)
+public:
+};
+
+template<char delimiter>
+std::istream& operator >> (std::istream& is, WordDelimitedBy<delimiter> & output)
+{
+    std::getline(is, output, delimiter);
+    return is;
+}
+
+InSelectionFilter::InSelectionFilter(const string & filter)
+    : positiveMatchers()
+    , negativeMatchers()
+{
+    std::istringstream issParts(filter);
+    std::vector<std::string> parts((std::istream_iterator<WordDelimitedBy<':'>>(issParts)),
+                                    std::istream_iterator<WordDelimitedBy<':'>>());
+    for (auto & part : parts)
     {
-        isValid = true;
-        auto posSecondDot = filter.find('.', posFirstDot + 1);
-        if (posSecondDot != string::npos)
+        bool negative {};
+        if (part.find("-") == 0)
         {
-            auto posMoreDots = filter.find('.', posSecondDot + 1);
-            if (posMoreDots == string::npos) {
-                // Two dots, means we have suite.fixture.test specification
-                filterSuite = filter.substr(0, posFirstDot);
-                filterFixture = filter.substr(posFirstDot + 1, posSecondDot - posFirstDot - 1);
-                filterTest = filter.substr(posSecondDot + 1);
+            negative = true;
+            part = part.substr(1);
+        }
+        std::istringstream issDots(part);
+        std::vector<std::string> dottedParts((std::istream_iterator<WordDelimitedBy<'.'>>(issDots)),
+                                              std::istream_iterator<WordDelimitedBy<'.'>>());
+        string filterSuite;
+        string filterFixture;
+        string filterTest;
+        if (dottedParts.size() == 1)
+        {
+            filterSuite = "";
+            filterFixture = "";
+            filterTest = dottedParts[0];
+        }
+        else if (dottedParts.size() == 2)
+        {
+            if ((dottedParts[0].find("*") == 0) || (dottedParts[1].rfind("*") == dottedParts[1].length() - 1))
+            {
+                // If only one dot, and starts or ends with wildcard, treat it as a normal pattern
+                filterSuite = "";
             } else
             {
-                // Too many dots, invalid
-            }
-        } else
-        {
-            // One dot
-            // Match on either suite or test, depending on position of any wildcard
-            auto posFirstWildcard = filter.find('*');
-            if (posFirstWildcard == string::npos)
-            {
-                // No wildcard, use pattern *.fixture.test
+                // If only one dot, and not starting with wildcard, treat it as wildcard suite
                 filterSuite = "*";
-                filterFixture = filter.substr(0, posFirstDot);
-                filterTest = filter.substr(posFirstDot + 1);
-            } else if (posFirstWildcard == 0)
-            {
-                // Left side wildcard
-                filterSuite = "*";
-                filterTest = filter.substr(posFirstDot + 1);
-                if (posFirstDot == 1)
-                {
-                    // Pattern *.*.text
-                    filterFixture = "*";
-                } else
-                {
-                    // Pattern *.*fixture.test
-                    filterFixture = "*" + filter.substr(0, posFirstDot);
-                }
-            } else if (posFirstWildcard == filter.length() - 1)
-            {
-                // Right side wildcard
-                filterSuite = filter.substr(0, posFirstDot);
-                filterTest = "*";
-                if (posFirstDot == filter.length() - 2)
-                {
-                    // Pattern suite.fixture.*
-                    filterFixture = "*";
-                } else
-                {
-                    // Pattern suite.fixture*.*
-                    filterFixture = filter.substr(posFirstDot + 1) + "*";
-                }
-            } else
-            {
-                if (posFirstWildcard < posFirstDot)
-                {
-                    // Wildcard in middle, use pattern suite*.*.test or suite.*.*test
-                    filterSuite = filter.substr(0, posFirstDot);
-                    filterFixture = "*";
-                    filterTest = filter.substr(posFirstDot + 1);
-                }
             }
+            filterFixture = dottedParts[0];
+            filterTest = dottedParts[1];
         }
-    } else
-    {
-        // Match on either suite or test, depending on position of any wildcard
-        auto posFirstWildcard = filter.find('*');
-        if (posFirstWildcard == string::npos)
+        else
         {
-            // No asterisk, no match possible
-        } else
-        {
-            isValid = true;
-            filterSuite = filter.substr(0, posFirstWildcard) + "*";
-            filterFixture = "*";
-            filterTest = "*" + filter.substr(posFirstWildcard + 1);
+            filterSuite = dottedParts[0];
+            filterFixture = dottedParts[1];
+            filterTest = dottedParts[2];
         }
+        std::string matchString;
+        if (!filterSuite.empty())
+            matchString += filterSuite + "\\.";
+        if (!filterFixture.empty())
+            matchString += filterFixture + "\\.";
+        matchString += filterTest;
+        FindAndReplaceAll(matchString, "*", ".*");
+        if (negative)
+            negativeMatchers.emplace_back(matchString);
+        else
+            positiveMatchers.emplace_back(matchString);
     }
-    FindAndReplaceAll(filterSuite, "*", ".*");
-    FindAndReplaceAll(filterFixture, "*", ".*");
-    FindAndReplaceAll(filterTest, "*", ".*");
-    matcherSuite = regex(filterSuite);
-    matcherFixture = regex(filterFixture);
-    matcherTest = regex(filterTest);
+    if (positiveMatchers.empty())
+        positiveMatchers.emplace_back(".*");
 }
 
 bool InSelectionFilter::operator () (const TestInfo * const test) const
 {
-    return regex_match(test->_details.testName, matcherTest);
+    bool positiveMatch {};
+    std::string fullName = test->_details.suiteName + "." + test->_details.fixtureName + "." + test->_details.testName;
+    for (auto const & matcher : positiveMatchers)
+    {
+        if (regex_match(fullName, matcher.matcher))
+        {
+            positiveMatch = true;
+            break;
+        }
+    }
+    bool negativeMatch {};
+    for (auto const & matcher : negativeMatchers)
+    {
+        if (regex_match(fullName, matcher.matcher))
+        {
+            negativeMatch  = true;
+            break;
+        }
+    }
+    return positiveMatch && !negativeMatch;
 }
 
-bool InSelectionFilter::operator () (const TestFixtureInfo * const fixture) const
+int CountSuites(const TestRegistry & registry)
 {
-    return regex_match(fixture->Name(), matcherFixture);
+    int numberOfTestSuites = 0;
+    TestSuiteInfo * testSuite = registry.GetHead();
+    while (testSuite)
+    {
+        ++numberOfTestSuites;
+        testSuite = testSuite->next;
+    }
+    return numberOfTestSuites;
 }
 
-bool InSelectionFilter::operator () (const TestSuiteInfo * const suite) const
+int CountFixtures(const TestRegistry & registry)
 {
-    return regex_match(suite->Name(), matcherSuite);
+    int numberOfTestFixtures = 0;
+    TestSuiteInfo * testSuite = registry.GetHead();
+    while (testSuite)
+    {
+        numberOfTestFixtures += CountFixtures(*testSuite);
+        testSuite = testSuite->next;
+    }
+    return numberOfTestFixtures;
 }
 
-bool InSelectionFilter::IsValid() const
+int CountTests(const TestRegistry & registry)
 {
-    return isValid;
+    int numberOfTests = 0;
+    TestSuiteInfo * testSuite = registry.GetHead();
+    while (testSuite)
+    {
+        numberOfTests += CountTests(*testSuite);
+        testSuite = testSuite->next;
+    }
+    return numberOfTests;
+}
+
+int CountFixtures(const TestSuiteInfo & testSuite)
+{
+    int numberOfTestFixtures = 0;
+    TestFixtureInfo * testFixture = testSuite.GetHead();
+    while (testFixture)
+    {
+        ++numberOfTestFixtures;
+        testFixture = testFixture->next;
+    }
+    return numberOfTestFixtures;
+}
+
+int CountTests(const TestSuiteInfo & testSuite)
+{
+    int numberOfTests = 0;
+    TestFixtureInfo * testFixture = testSuite.GetHead();
+    while (testFixture)
+    {
+        numberOfTests += CountTests(*testFixture);
+        testFixture = testFixture->next;
+    }
+    return numberOfTests;
+}
+
+int CountTests(const TestFixtureInfo & testFixture)
+{
+    int numberOfTests = 0;
+    Test * test = testFixture.GetHead();
+    while (test)
+    {
+        ++numberOfTests;
+        test = test->_next;
+    }
+    return numberOfTests;
 }
 
 int RunAllTests()

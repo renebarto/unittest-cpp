@@ -81,42 +81,6 @@ TestSuiteInfo * TestRegistry::GetHead() const
     return head;
 }
 
-int TestRegistry::CountSuites()
-{
-    int numberOfTestSuites = 0;
-    TestSuiteInfo * testSuite = GetHead();
-    while (testSuite)
-    {
-        ++numberOfTestSuites;
-        testSuite = testSuite->next;
-    }
-    return numberOfTestSuites;
-}
-
-int TestRegistry::CountFixtures()
-{
-    int numberOfTestFixtures = 0;
-    TestSuiteInfo * testSuite = GetHead();
-    while (testSuite)
-    {
-        numberOfTestFixtures += testSuite->CountFixtures();
-        testSuite = testSuite->next;
-    }
-    return numberOfTestFixtures;
-}
-
-int TestRegistry::CountTests()
-{
-    int numberOfTests = 0;
-    TestSuiteInfo * testSuite = GetHead();
-    while (testSuite)
-    {
-        numberOfTests += testSuite->CountTests();
-        testSuite = testSuite->next;
-    }
-    return numberOfTests;
-}
-
 TestRegistrar::TestRegistrar(TestRegistry & registry, Test * test)
 {
 #ifdef TRACE

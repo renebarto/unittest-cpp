@@ -26,63 +26,10 @@ public:
     const std::string & Name() const;
     TestFixtureInfo * next;
 
-    template <class Predicate> void RunIf(const Predicate & predicate, int const maxTestTimeInMs, TestResults * testResults);
-    template <class Predicate> void ListIf(const Predicate & predicate, TestResults * testResults);
-
-    int CountTests();
-    template <typename Predicate> int CountTestsIf(const Predicate & predicate);
-
 private:
     Test * head;
     Test * tail;
     std::string fixtureName;
 };
-
-template <class Predicate> void TestFixtureInfo::RunIf(const Predicate & predicate, int const maxTestTimeInMs, TestResults * testResults)
-{
-    Timer testTimer;
-    testTimer.Start();
-
-    testResults->OnTestFixtureStart(this);
-
-    Test * test = this->GetHead();
-    while (test)
-    {
-        if (predicate(test))
-            test->Run(maxTestTimeInMs, testResults);
-        test = test->_next;
-    }
-
-    testResults->OnTestFixtureFinish(this, testTimer.GetTimeInMilliSeconds());
-}
-
-template <class Predicate> void TestFixtureInfo::ListIf(const Predicate & predicate, TestResults * testResults)
-{
-    if (CountTestsIf(predicate) <= 0)
-        return;
-
-    testResults->OnTestFixtureList(this);
-
-    Test * test = this->GetHead();
-    while (test)
-    {
-        if (predicate(test))
-            test->List(testResults);
-        test = test->_next;
-    }
-}
-
-template <typename Predicate> int TestFixtureInfo::CountTestsIf(const Predicate & predicate)
-{
-    int numberOfTests = 0;
-    Test * test = this->GetHead();
-    while (test)
-    {
-        if (predicate(test))
-            numberOfTests++;
-        test = test->_next;
-    }
-    return numberOfTests;
-}
 
 } // namespace UnitTestCpp
