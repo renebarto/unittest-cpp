@@ -1,6 +1,5 @@
 #include <unittest-cpp/TestRunner.h>
 
-#include <regex>
 #include <unittest-cpp/UnitTestC++.h>
 
 using namespace std;
@@ -70,7 +69,8 @@ InSelectionFilter::InSelectionFilter(const string & filter)
         }
         else if (dottedParts.size() == 2)
         {
-            if ((dottedParts[0].find("*") == 0) || (dottedParts[1].rfind("*") == dottedParts[1].length() - 1))
+            if (((dottedParts[0].length() >= 1) && (dottedParts[0][0] == '*')) ||
+                ((dottedParts[1].length() >= 1) && (dottedParts[1][dottedParts[1].length() - 1] == '*')))
             {
                 // If only one dot, and starts or ends with wildcard, treat it as a normal pattern
                 filterSuite = "";
