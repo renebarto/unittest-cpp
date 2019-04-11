@@ -125,11 +125,6 @@ int main(int argc, const char * argv[])
     if (!testFilter.empty())
         filter = &FilteringSelector;
 
-    if (!filter->IsValid())
-    {
-        console << "Invalid filter specified, defaulting to non-filtered";
-        filter = &NonFilteringSelector;
-    }
     if (!xmlOutput.empty())
     {
         std::ofstream outputFile;

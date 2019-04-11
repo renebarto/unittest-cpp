@@ -40,16 +40,4 @@ const std::string & TestFixtureInfo::Name() const
     return fixtureName;
 }
 
-int TestFixtureInfo::CountTests()
-{
-    int numberOfTests = 0;
-    Test * test = GetHead();
-    while (test)
-    {
-        ++numberOfTests;
-        test = test->_next;
-    }
-    return numberOfTests;
-}
-
 } // namespace UnitTestCpp

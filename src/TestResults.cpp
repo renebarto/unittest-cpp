@@ -2,6 +2,7 @@
 
 #include <unittest-cpp/ITestReporter.h>
 #include <unittest-cpp/TestDetails.h>
+#include <unittest-cpp/TestRunner.h>
 #include <unittest-cpp/TestFixtureInfo.h>
 #include <unittest-cpp/TestSuiteInfo.h>
 #include <unittest-cpp/TestInfo.h>
@@ -24,29 +25,29 @@ TestResults::~TestResults()
 {
 }
 
-void TestResults::OnTestSuiteStart(TestSuiteInfo * suiteInfo)
+void TestResults::OnTestSuiteStart(const TestSuiteInfo & suiteInfo)
 {
     if (reporter)
-        reporter->ReportTestSuiteStart(suiteInfo->Name(), suiteInfo->CountFixtures());
+        reporter->ReportTestSuiteStart(suiteInfo.Name(), CountFixtures(suiteInfo));
 }
 
-void TestResults::OnTestSuiteFinish(TestSuiteInfo * suiteInfo, int milliSecondsElapsed)
+void TestResults::OnTestSuiteFinish(const TestSuiteInfo & suiteInfo, int milliSecondsElapsed)
 {
     if (reporter)
-        reporter->ReportTestSuiteFinish(suiteInfo->Name(), suiteInfo->CountFixtures(),
+        reporter->ReportTestSuiteFinish(suiteInfo.Name(), CountFixtures(suiteInfo),
                                         milliSecondsElapsed);
 }
 
-void TestResults::OnTestFixtureStart(TestFixtureInfo * fixtureInfo)
+void TestResults::OnTestFixtureStart(const TestFixtureInfo & fixtureInfo)
 {
     if (reporter)
-        reporter->ReportTestFixtureStart(fixtureInfo->Name(), fixtureInfo->CountTests());
+        reporter->ReportTestFixtureStart(fixtureInfo.Name(), CountTests(fixtureInfo));
 }
 
-void TestResults::OnTestFixtureFinish(TestFixtureInfo * fixtureInfo, int milliSecondsElapsed)
+void TestResults::OnTestFixtureFinish(const TestFixtureInfo & fixtureInfo, int milliSecondsElapsed)
 {
     if (reporter)
-        reporter->ReportTestFixtureFinish(fixtureInfo->Name(), fixtureInfo->CountTests(),
+        reporter->ReportTestFixtureFinish(fixtureInfo.Name(), CountTests(fixtureInfo),
                                           milliSecondsElapsed);
 }
 
@@ -76,16 +77,16 @@ void TestResults::OnTestFinish(const TestDetails & details, int milliSecondsElap
         reporter->ReportTestFinish(details, !currentTestFailed, milliSecondsElapsed);
 }
 
-void TestResults::OnTestSuiteList(TestSuiteInfo * suiteInfo)
+void TestResults::OnTestSuiteList(const TestSuiteInfo & suiteInfo)
 {
     if (reporter)
-        reporter->ReportTestSuiteEntry(suiteInfo->Name());
+        reporter->ReportTestSuiteEntry(suiteInfo.Name());
 }
 
-void TestResults::OnTestFixtureList(TestFixtureInfo * fixtureInfo)
+void TestResults::OnTestFixtureList(const TestFixtureInfo & fixtureInfo)
 {
     if (reporter)
-        reporter->ReportTestFixtureEntry(fixtureInfo->Name());
+        reporter->ReportTestFixtureEntry(fixtureInfo.Name());
 }
 
 void TestResults::OnTestList(const TestDetails & details)

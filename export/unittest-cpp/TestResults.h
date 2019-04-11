@@ -23,16 +23,16 @@ public:
 
     TestResults & operator = (const TestResults &) = delete;
 
-    void OnTestSuiteStart(TestSuiteInfo * suiteInfo);
-    void OnTestSuiteFinish(TestSuiteInfo * suiteInfo, int milliSecondsElapsed);
-    void OnTestFixtureStart(TestFixtureInfo * fixtureInfo);
-    void OnTestFixtureFinish(TestFixtureInfo * fixtureInfo, int milliSecondsElapsed);
+    void OnTestSuiteStart(const TestSuiteInfo & suiteInfo);
+    void OnTestSuiteFinish(const TestSuiteInfo & suiteInfo, int milliSecondsElapsed);
+    void OnTestFixtureStart(const TestFixtureInfo & fixtureInfo);
+    void OnTestFixtureFinish(const TestFixtureInfo & fixtureInfo, int milliSecondsElapsed);
     void OnTestStart(const TestDetails & details);
     void OnTestFailure(const TestDetails & details, const std::string & message);
     void OnTestFinish(const TestDetails & details, int milliSecondsElapsed);
 
-    void OnTestSuiteList(TestSuiteInfo * suiteInfo);
-    void OnTestFixtureList(TestFixtureInfo * fixtureInfo);
+    void OnTestSuiteList(const TestSuiteInfo & suiteInfo);
+    void OnTestFixtureList(const TestFixtureInfo & fixtureInfo);
     void OnTestList(const TestDetails & details);
 
     int GetTotalTestCount() const;
