@@ -42,9 +42,8 @@ private:
 struct UNIT_TEST_CPP_EXPORT FilterMatcher
 {
     FilterMatcher(const std::string & filter)
-            : matcher(filter)
+        : matcher(filter)
     {
-        std::cout << "Matcher " << filter << std::endl;
     }
     std::regex matcher;
 };
